@@ -20,7 +20,7 @@ const ToolsSection = () => {
     <section
       id="tools"
       data-theme="light"
-      className="relative min-h-screen py-24 md:py-32 section-light snap-section z-50 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
+      className="relative min-h-screen py-6 md:py-10 section-light snap-section z-50 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
     >
       <div className="section-container">
         <motion.div

@@ -63,7 +63,7 @@ const AchievementsSection = () => {
     <section
       id="achievements"
       data-theme="dark"
-      className="relative min-h-screen py-24 md:py-32 section-dark snap-section z-60 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center bg-[#0B0B0B] text-[#F5F5F5]"
+      className="relative min-h-screen py-6 md:py-10 section-dark snap-section z-60 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center bg-[#0B0B0B] text-[#F5F5F5]"
     >
       <div className="section-container">
         <motion.div

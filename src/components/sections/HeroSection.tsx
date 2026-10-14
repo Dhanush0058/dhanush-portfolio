@@ -61,7 +61,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
       ref={containerRef}
       id="home"
       data-theme="light"
-      className="relative min-h-screen py-24 md:py-32 px-4 sm:px-8 md:px-12 flex flex-col justify-center overflow-hidden w-full section-light snap-section z-10 bg-[#F5F5F5] text-[#111111]"
+      className="relative min-h-screen py-3 sm:py-5 md:py-6 px-4 sm:px-8 md:px-12 flex flex-col justify-center overflow-hidden w-full section-light snap-section z-10 bg-[#F5F5F5] text-[#111111]"
     >
       {/* Centered Framed Canvas Card (Balanced width with comfortable breathing room) */}
       <motion.div
