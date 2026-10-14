@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import Lenis from 'lenis';
+import { useState } from 'react';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navigation from '@/components/Navigation';
-import StackedCard from '@/components/StackedCard';
+import PageTurner, { PageItem } from '@/components/PageTurner';
 import HeroSection from '@/components/sections/HeroSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
@@ -15,169 +14,100 @@ import AchievementsSection from '@/components/sections/AchievementsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
 
-const cardIds = [
-  'home',
-  'work',
-  'about',
-  'experience',
-  'education',
-  'skills',
-  'tools',
-  'certifications',
-  'achievements',
-  'contact',
-];
-
 const Index = () => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Initialize Lenis smooth inertia scrolling + Card-by-Card Wheel Stepper
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
+  const pages: PageItem[] = [
+    {
+      id: 'home',
+      title: 'Overview',
+      theme: 'light',
+      component: <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />,
+    },
+    {
+      id: 'work',
+      title: 'Featured Work',
+      theme: 'dark',
+      component: <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />,
+    },
+    {
+      id: 'about',
+      title: 'Identity & Bio',
+      theme: 'light',
+      component: <AboutSection />,
+    },
+    {
+      id: 'experience',
+      title: 'Work Experience',
+      theme: 'light',
+      component: <ExperienceSection />,
+    },
+    {
+      id: 'education',
+      title: 'Academic Record',
+      theme: 'dark',
+      component: <EducationSection />,
+    },
+    {
+      id: 'skills',
+      title: 'Core Programming',
+      theme: 'light',
+      component: <SkillsSection />,
+    },
+    {
+      id: 'tools',
+      title: 'Tech Arsenal',
+      theme: 'light',
+      component: <ToolsSection />,
+    },
+    {
+      id: 'certifications',
+      title: 'Credentials & Certs',
+      theme: 'dark',
+      component: <CertificationsSection />,
+    },
+    {
+      id: 'achievements',
+      title: 'Honors & Awards',
+      theme: 'dark',
+      component: <AchievementsSection />,
+    },
+    {
+      id: 'contact',
+      title: 'Transmission & Dispatch',
+      theme: 'light',
+      component: (
+        <div className="flex flex-col min-h-screen justify-between pt-2 sm:pt-4">
+          <ContactSection />
+          <Footer />
+        </div>
+      ),
+    },
+  ];
 
-    let isThrottled = false;
-
-    // Card-by-card scroll stepper: Each scroll gesture transitions directly to the next/prev card
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) < 20) return;
-      if (isThrottled) return;
-
-      const currentScroll = window.scrollY;
-      const windowH = window.innerHeight;
-      const currentIndex = Math.round(currentScroll / windowH);
-
-      let targetIndex = currentIndex;
-      if (e.deltaY > 0) {
-        targetIndex = Math.min(currentIndex + 1, cardIds.length);
-      } else {
-        targetIndex = Math.max(currentIndex - 1, 0);
-      }
-
-      if (targetIndex !== currentIndex) {
-        e.preventDefault();
-        isThrottled = true;
-
-        if (targetIndex < cardIds.length) {
-          const targetEl = document.getElementById(cardIds[targetIndex]);
-          if (targetEl) {
-            lenis.scrollTo(targetEl, { duration: 0.95 });
-          } else {
-            lenis.scrollTo(targetIndex * windowH, { duration: 0.95 });
-          }
-        } else {
-          const footerEl = document.querySelector('footer');
-          if (footerEl) {
-            lenis.scrollTo(footerEl, { duration: 0.95 });
-          }
-        }
-
-        setTimeout(() => {
-          isThrottled = false;
-        }, 700);
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    const rafId = requestAnimationFrame(raf);
-
-    // Smooth anchor navigation handler
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a');
-      if (!target) return;
-      const href = target.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-          lenis.scrollTo(element, { offset: 0, duration: 1.0 });
-        }
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('click', handleAnchorClick);
-      lenis.destroy();
-    };
-  }, []);
+  const activeTheme = pages[currentPage]?.theme || 'light';
 
   return (
-    <div className="relative min-h-screen bg-background overflow-x-clip selection:bg-neutral-900 selection:text-white">
+    <div className="relative w-full h-screen overflow-hidden bg-background select-none selection:bg-neutral-900 selection:text-white">
       {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
 
-      {/* Top Floating Navigation with dynamic theme adaptation */}
-      <Navigation />
+      {/* Top Floating Navigation synchronized with 3D Page Turn */}
+      <Navigation
+        currentPage={currentPage}
+        onNavigatePage={setCurrentPage}
+        activeTheme={activeTheme}
+      />
 
-      {/* Main Full-Page Sections with Sticky Card Stacking & 3D Scroll Physics */}
-      <main className="relative w-full z-10">
-        {/* Card 00: Hero [LIGHT THEME] */}
-        <StackedCard id="home" theme="light" index={0} isFirst={true}>
-          <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
-        </StackedCard>
-
-        {/* Card 01: Featured Work [DARK THEME] */}
-        <StackedCard id="work" theme="dark" index={1}>
-          <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
-        </StackedCard>
-
-        {/* Card 02: Identity & Bio [LIGHT THEME] */}
-        <StackedCard id="about" theme="light" index={2}>
-          <AboutSection />
-        </StackedCard>
-
-        {/* Card 03: Professional Career [LIGHT THEME] */}
-        <StackedCard id="experience" theme="light" index={3}>
-          <ExperienceSection />
-        </StackedCard>
-
-        {/* Card 04: Academic Record [DARK THEME] */}
-        <StackedCard id="education" theme="dark" index={4}>
-          <EducationSection />
-        </StackedCard>
-
-        {/* Card 05: Core Programming [LIGHT THEME] */}
-        <StackedCard id="skills" theme="light" index={5}>
-          <SkillsSection />
-        </StackedCard>
-
-        {/* Card 06: Development Arsenal [LIGHT THEME] */}
-        <StackedCard id="tools" theme="light" index={6}>
-          <ToolsSection />
-        </StackedCard>
-
-        {/* Card 07: Verified Credentials [DARK THEME] */}
-        <StackedCard id="certifications" theme="dark" index={7}>
-          <CertificationsSection />
-        </StackedCard>
-
-        {/* Card 08: Accolades & Honors [DARK THEME] */}
-        <StackedCard id="achievements" theme="dark" index={8}>
-          <AchievementsSection />
-        </StackedCard>
-
-        {/* Card 09: Dispatch & Transmission [LIGHT THEME] */}
-        <StackedCard id="contact" theme="light" index={9} isLast={true}>
-          <ContactSection />
-        </StackedCard>
+      {/* 3D Realistic Book Page Turn Experience */}
+      <main className="w-full h-full">
+        <PageTurner
+          pages={pages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </main>
-
-      {/* Clean Minimalist Footer */}
-      <div className="relative z-[80]">
-        <Footer />
-      </div>
     </div>
   );
 };

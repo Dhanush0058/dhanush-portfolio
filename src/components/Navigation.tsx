@@ -2,8 +2,31 @@ import { useState, useEffect } from 'react';
 import { Heart, Bookmark, ArrowUpRight, Menu, X, Check } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+interface NavigationProps {
+  currentPage?: number;
+  onNavigatePage?: (pageIndex: number) => void;
+  activeTheme?: 'light' | 'dark';
+}
+
+const pageLinkMap: Record<string, number> = {
+  home: 0,
+  work: 1,
+  about: 2,
+  experience: 3,
+  education: 4,
+  skills: 5,
+  tools: 6,
+  certifications: 7,
+  achievements: 8,
+  contact: 9,
+};
+
+const Navigation = ({
+  currentPage = 0,
+  onNavigatePage,
+  activeTheme: propTheme,
+}: NavigationProps) => {
+  const [isScrolled, setIsScrolled] = useState(currentPage > 0);
   const [isFollowing, setIsFollowing] = useState(false);
   const [likeCount, setLikeCount] = useState(() => {
     const saved = localStorage.getItem('portfolio_likes');
@@ -13,7 +36,17 @@ const Navigation = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>('light');
+  const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>(propTheme || 'light');
+
+  useEffect(() => {
+    if (propTheme) {
+      setActiveTheme(propTheme);
+    }
+  }, [propTheme]);
+
+  useEffect(() => {
+    setIsScrolled(currentPage > 0 || window.scrollY > 200);
+  }, [currentPage]);
 
   useEffect(() => {
     const handleScrollVisibility = () => {
@@ -107,7 +140,16 @@ const Navigation = () => {
           {/* Left Side: Avatar, Name, Availability, Follow */}
           <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
             {/* Avatar */}
-            <a href="#home" className="relative group flex-shrink-0">
+            <a
+              href="#home"
+              onClick={(e) => {
+                if (onNavigatePage) {
+                  e.preventDefault();
+                  onNavigatePage(0);
+                }
+              }}
+              className="relative group flex-shrink-0"
+            >
               <div
                 className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 shadow-sm transition-all duration-500 ease-in-out group-hover:scale-105 ${
                   isDark ? 'border-neutral-600 bg-neutral-900' : 'border-neutral-900 bg-white'
@@ -129,6 +171,12 @@ const Navigation = () => {
               <div className="flex items-center gap-2">
                 <a
                   href="#home"
+                  onClick={(e) => {
+                    if (onNavigatePage) {
+                      e.preventDefault();
+                      onNavigatePage(0);
+                    }
+                  }}
                   className={`font-display font-bold text-sm sm:text-base tracking-tight truncate transition-colors duration-500 ease-in-out ${
                     isDark ? 'text-[#F5F5F5] hover:text-white' : 'text-[#111111] hover:text-neutral-700'
                   }`}
@@ -176,7 +224,13 @@ const Navigation = () => {
               <a
                 key={link}
                 href={`#${link}`}
-                className={`transition-colors duration-500 ease-in-out ${
+                onClick={(e) => {
+                  if (onNavigatePage && pageLinkMap[link] !== undefined) {
+                    e.preventDefault();
+                    onNavigatePage(pageLinkMap[link]);
+                  }
+                }}
+                className={`transition-colors duration-500 ease-in-out cursor-pointer ${
                   isDark
                     ? 'text-[#999999] hover:text-white'
                     : 'text-[#666666] hover:text-[#111111]'
@@ -233,7 +287,13 @@ const Navigation = () => {
             {/* Primary CTA: "Get in touch" */}
             <a
               href="#contact"
-              className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md transition-all duration-500 ease-in-out transform hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 ${
+              onClick={(e) => {
+                if (onNavigatePage) {
+                  e.preventDefault();
+                  onNavigatePage(pageLinkMap['contact']);
+                }
+              }}
+              className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md transition-all duration-500 ease-in-out transform hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 cursor-pointer ${
                 isDark
                   ? 'bg-[#F5F5F5] text-[#111111] hover:bg-white'
                   : 'bg-[#111111] text-white hover:bg-neutral-800'
@@ -269,8 +329,14 @@ const Navigation = () => {
               <a
                 key={item}
                 href={`#${item}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-3 py-2 rounded-lg transition-colors ${
+                onClick={(e) => {
+                  if (onNavigatePage && pageLinkMap[item] !== undefined) {
+                    e.preventDefault();
+                    onNavigatePage(pageLinkMap[item]);
+                  }
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`px-3 py-2 rounded-lg transition-colors cursor-pointer ${
                   isDark ? 'hover:bg-neutral-800 text-neutral-200' : 'hover:bg-neutral-200/70 text-[#111111]'
                 }`}
               >
