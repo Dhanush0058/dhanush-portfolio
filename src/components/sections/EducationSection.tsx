@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { GraduationCap, Award } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 
 const education = [
   {
@@ -46,7 +46,7 @@ const EducationSection = () => {
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
           <div className="section-tag text-[#999999]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+            <span className="w-2 h-2 rounded-full bg-white/70 inline-block"></span>
             04 // ACADEMIC RECORD
           </div>
           <h2 className="section-title text-[#F5F5F5]">EDUCATION</h2>
@@ -107,11 +107,11 @@ const EducationSection = () => {
                 </div>
               </div>
 
-              {/* Grade Badge */}
+              {/* Academic Metric */}
               <div className="md:text-right flex-shrink-0 self-start md:self-center">
-                <div className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full bg-emerald-950/50 text-emerald-300 border border-emerald-500/30 shadow-sm">
-                  <Award className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{item.grade}</span>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 text-xs font-mono text-neutral-200 shadow-sm hover:border-white/30 transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
+                  <span className="font-semibold text-[#F5F5F5]">{item.grade}</span>
                 </div>
               </div>
             </motion.div>

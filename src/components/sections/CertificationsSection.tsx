@@ -43,7 +43,7 @@ const CertificationsSection = () => {
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
           <div className="section-tag text-[#999999]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+            <span className="w-2 h-2 rounded-full bg-white/70 inline-block"></span>
             06 // CREDENTIALS
           </div>
           <h2 className="section-title text-[#F5F5F5]">CERTIFICATIONS</h2>
@@ -89,8 +89,8 @@ const CertificationsSection = () => {
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/80 mb-2">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <div className="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-neutral-300 bg-white/[0.06] px-2.5 py-0.5 rounded-full border border-white/10 mb-2">
+                  <CheckCircle2 className="w-3 h-3 text-neutral-400" />
                   <span>{cert.badge}</span>
                 </div>
 
