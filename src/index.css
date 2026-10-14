@@ -98,6 +98,22 @@
 }
 
 @layer components {
+  /* Outline text for oversized display typography */
+  .text-stroke {
+    -webkit-text-stroke: 1.5px #111111;
+    color: transparent;
+  }
+  @media (min-width: 640px) {
+    .text-stroke {
+      -webkit-text-stroke: 2.5px #111111;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-stroke {
+      -webkit-text-stroke: 3.5px #111111;
+    }
+  }
+
   /* Minimalist / Neo-brutalist surfaces */
   .neo-box {
     @apply bg-card border border-neutral-200 rounded-2xl;

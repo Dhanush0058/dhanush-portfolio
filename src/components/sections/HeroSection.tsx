@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDownRight, ArrowRight, Github, Linkedin, Mail, Sparkles, Terminal } from 'lucide-react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { ArrowUpRight, Github, Linkedin, Mail, Code, Terminal, Sparkles } from 'lucide-react';
 
 interface HeroSectionProps {
   activeFilter?: string;
@@ -10,243 +8,211 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [heroData, setHeroData] = useState({
-    name: 'Dhanush Reddy',
-    tagline: 'Crafting intelligent AI systems & high-performance software with razor-sharp precision.',
-    role: 'B.Tech IT Student • AI/ML Explorer • Problem Solver',
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Parallax scroll effect for watermark
+  // Scroll physics
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: containerRef,
     offset: ['start start', 'end start'],
   });
 
-  const watermarkX = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
-  const watermarkOpacity = useTransform(scrollYProgress, [0, 0.8], [0.06, 0.01]);
+  // Parallax on big text (moves slower than scroll)
+  const textParallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '35%']);
 
-  useEffect(() => {
-    const fetchHeroData = async () => {
-      try {
-        const docRef = doc(db, 'content', 'hero');
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setHeroData((prev) => ({
-            ...prev,
-            ...data,
-          }));
-        }
-      } catch {
-        // Fallback to default state
-      }
-    };
-    fetchHeroData();
-  }, []);
+  // Hero section compression as user scrolls down
+  const portraitScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.92]);
+  const portraitOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.45]);
 
-  const filterTags = ['All', 'AI / ML', 'Python', 'Web Apps', 'Systems'];
-
-  const handleFilterClick = (tag: string) => {
-    if (onFilterChange) {
-      onFilterChange(tag);
-    }
-    const projectsElem = document.getElementById('work') || document.getElementById('projects');
-    if (projectsElem) {
-      projectsElem.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const titleWords = ['/SELECTED', 'WORK'];
+  const socialLinks = [
+    {
+      name: 'GitHub',
+      href: 'https://github.com/Dhanush0058',
+      icon: Github,
+    },
+    {
+      name: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/dhanush-reddy-50551b309/',
+      icon: Linkedin,
+    },
+    {
+      name: 'Email',
+      href: 'mailto:dhanushr672@gmail.com',
+      icon: Mail,
+    },
+    {
+      name: 'LeetCode',
+      href: 'https://leetcode.com',
+      icon: Code,
+    },
+  ];
 
   return (
     <section
+      ref={containerRef}
       id="home"
-      ref={sectionRef}
-      className="relative min-h-[92vh] pt-24 pb-12 sm:pt-32 sm:pb-16 flex items-center justify-center px-4 sm:px-6 overflow-hidden"
+      className="relative min-h-screen pt-20 pb-12 sm:pt-24 sm:pb-16 px-3 sm:px-6 lg:px-8 flex items-center justify-center overflow-hidden"
     >
-      {/* Background Watermark Text: "PORTFOLIO" with Parallax */}
+      {/* Centered Framed Canvas Card (matching the exact reference screenshot) */}
       <motion.div
-        style={{ x: watermarkX, opacity: watermarkOpacity }}
-        className="absolute top-1/2 left-0 -translate-y-1/2 pointer-events-none select-none whitespace-nowrap z-0 font-display font-black text-[18vw] leading-none text-neutral-900 tracking-tighter"
-      >
-        PORTFOLIO
-      </motion.div>
-
-      {/* Main Elevated Framed Container */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 20 }}
+        initial={{ opacity: 0, scale: 0.97, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-5xl bg-white/95 backdrop-blur-xl border border-neutral-200/90 rounded-3xl p-6 sm:p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)]"
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full max-w-6xl bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-10 md:p-12 lg:p-14 overflow-hidden flex flex-col justify-between min-h-[82vh]"
       >
-        {/* Subtle Decorative Grid Pattern inside Card */}
+        {/* Subtle inner ambient texture */}
         <div
-          className="absolute inset-0 rounded-3xl pointer-events-none opacity-[0.03]"
+          className="absolute inset-0 pointer-events-none opacity-[0.025]"
           style={{
             backgroundImage: `radial-gradient(#111111 1px, transparent 1px)`,
-            backgroundSize: '16px 16px',
+            backgroundSize: '20px 20px',
           }}
         />
 
-        {/* TOP OF HERO SECTION: GOJO STYLE PICTURE AVATAR & BADGE */}
-        <div className="relative flex flex-col items-center text-center mb-8 sm:mb-10">
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative"
-          >
-            {/* Ambient Aura */}
-            <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-900 opacity-20 blur-md group-hover:opacity-40 transition-opacity duration-500" />
-
-            {/* Gojo Picture Frame */}
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-neutral-950 bg-neutral-100 shadow-[4px_4px_0px_#111111] transition-transform duration-300 group-hover:-translate-y-1">
-              <img
-                src="/GojoStylePicture.png"
-                alt="Dhanush Reddy — Gojo Style Portrait"
-                className="w-full h-full object-cover object-top filter contrast-[1.05] brightness-[1.02] group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            {/* Status Pill on Picture */}
-            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-neutral-950 text-white font-mono text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full border border-neutral-800 shadow-md flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-emerald-400" />
-              <span>Limitless Mindset</span>
-            </div>
-          </motion.div>
-
-          {/* Subtitle / Identity */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="mt-6 flex flex-wrap items-center justify-center gap-2"
-          >
-            <span className="font-mono text-xs sm:text-sm font-semibold text-neutral-500 uppercase tracking-wider">
-              {heroData.name}
-            </span>
-            <span className="text-neutral-300">•</span>
-            <span className="font-mono text-xs sm:text-sm text-neutral-600">
-              B.Tech IT @ VJIT
-            </span>
-            <span className="text-neutral-300">•</span>
-            <span className="inline-flex items-center gap-1 font-mono text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              9.33 CGPA
-            </span>
-          </motion.div>
-        </div>
-
-        {/* PRIMARY FOREGROUND TEXT: "/SELECTED WORK" (SLIDING TEXT STAGGER REVEAL) */}
-        <div className="relative text-center my-6 sm:my-8 overflow-hidden">
-          <h1 className="font-display font-black text-4xl sm:text-6xl md:text-8xl tracking-tighter uppercase text-neutral-950 flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-5 leading-[0.95]">
-            {titleWords.map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-block overflow-hidden pb-1">
-                <motion.span
-                  initial={{ y: '110%' }}
-                  animate={{ y: '0%' }}
-                  transition={{
-                    duration: 0.85,
-                    delay: 0.3 + wordIndex * 0.15,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block"
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-neutral-600 max-w-2xl mx-auto font-normal leading-relaxed"
-          >
-            {heroData.tagline}
-          </motion.p>
-        </div>
-
-        {/* Quick Social & Terminal Badges */}
+        {/* STEP 1: TOP BAR INSIDE THE CARD */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
-          className="flex items-center justify-center gap-3 mb-8 sm:mb-10"
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-20 flex items-center justify-between gap-4 mb-6 sm:mb-10"
         >
-          <a
-            href="https://github.com/Dhanush0058"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2.5 rounded-full border border-neutral-200 hover:border-neutral-900 bg-neutral-50 hover:bg-neutral-900 text-neutral-700 hover:text-white transition-all duration-200 shadow-sm"
-            aria-label="GitHub Profile"
-          >
-            <Github className="w-4 h-4" />
-          </a>
-          <a
-            href="https://linkedin.com/in/dhanushreddy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2.5 rounded-full border border-neutral-200 hover:border-neutral-900 bg-neutral-50 hover:bg-neutral-900 text-neutral-700 hover:text-white transition-all duration-200 shadow-sm"
-            aria-label="LinkedIn Profile"
-          >
-            <Linkedin className="w-4 h-4" />
-          </a>
-          <a
-            href="mailto:dhanushreddy672@gmail.com"
-            className="p-2.5 rounded-full border border-neutral-200 hover:border-neutral-900 bg-neutral-50 hover:bg-neutral-900 text-neutral-700 hover:text-white transition-all duration-200 shadow-sm"
-            aria-label="Email Me"
-          >
-            <Mail className="w-4 h-4" />
-          </a>
-          <a
-            href="#skills"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neutral-200 text-xs font-mono text-neutral-600 hover:text-neutral-900 hover:border-neutral-400 bg-neutral-50/50 transition-colors"
-          >
-            <Terminal className="w-3.5 h-3.5 text-neutral-500" />
-            <span>Python • Java • AI</span>
-          </a>
-        </motion.div>
-
-        {/* SUB-NAVIGATION / FILTER BAR */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="pt-6 border-t border-neutral-200/90 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs"
-        >
-          {/* Left: Minimal Inline Filter Tags */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5">
-            <span className="text-neutral-400 mr-1 hidden md:inline">FILTER:</span>
-            {filterTags.map((tag) => {
-              const isSelected = activeFilter === tag;
-              return (
-                <button
-                  key={tag}
-                  onClick={() => handleFilterClick(tag)}
-                  className={`px-3 py-1 rounded-full border transition-all duration-200 cursor-pointer ${
-                    isSelected
-                      ? 'bg-neutral-950 text-white border-neutral-950 font-semibold shadow-sm'
-                      : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border-neutral-200'
-                  }`}
-                >
-                  [ {tag} ]
-                </button>
-              );
-            })}
+          {/* Availability Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 shadow-sm">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span className="font-mono text-xs sm:text-sm font-medium text-neutral-800">
+              Available for New Project
+            </span>
           </div>
 
-          {/* Right: Hoverable Link Pointing to View all work -> */}
+          {/* Quick Nav Links (matching screenshot) */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-neutral-600">
+            <a href="#work" className="hover:text-neutral-950 transition-colors">
+              Work <span className="font-mono text-neutral-400 text-xs">[4]</span>
+            </a>
+            <a href="#about" className="hover:text-neutral-950 transition-colors">
+              About
+            </a>
+            <a href="#skills" className="hover:text-neutral-950 transition-colors">
+              Stack
+            </a>
+            <a href="#education" className="hover:text-neutral-950 transition-colors">
+              Education
+            </a>
+            <a href="#contact" className="hover:text-neutral-950 transition-colors">
+              Contact
+            </a>
+          </nav>
+
+          {/* Let's Talk CTA Button */}
           <a
-            href="#work"
-            className="group inline-flex items-center gap-1.5 font-semibold text-neutral-900 hover:text-neutral-600 transition-colors whitespace-nowrap cursor-pointer py-1"
+            href="#contact"
+            className="inline-flex items-center gap-1.5 bg-neutral-950 text-white hover:bg-neutral-800 font-sans text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
           >
-            <span>View all work</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            <span>Let's Talk</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </motion.div>
+
+        {/* STEP 2: MAIN GIANT TYPOGRAPHY WITH PARALLAX */}
+        <motion.div
+          style={{ y: textParallaxY }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 text-center select-none pt-2 sm:pt-4"
+        >
+          <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] tracking-tight leading-none uppercase flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-6">
+            <span className="text-stroke">DHANUSH</span>
+            <span className="text-neutral-950">REDDY</span>
+          </h1>
+        </motion.div>
+
+        {/* STEP 3 & 4: CENTRAL PORTRAIT + FLANKING SUB-CONTENT & SOCIAL PILLS */}
+        <div className="relative z-20 mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+          {/* LEFT SUB-CONTENT: Title, Bio & Let's Collaborate */}
+          <motion.div
+            initial={{ opacity: 0, x: -25 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-4 order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left space-y-3 pb-2 md:pb-6"
+          >
+            <h2 className="font-display font-black text-xl sm:text-2xl text-neutral-950">
+              AI / ML & Software Developer
+            </h2>
+            <p className="text-neutral-600 text-xs sm:text-sm font-normal max-w-xs leading-relaxed">
+              Designing digital architectures and machine learning systems that are high-performance,
+              scalable, and conversion focused.
+            </p>
+            <div className="pt-2">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-1.5 bg-neutral-950 text-white hover:bg-neutral-800 text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-md hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+              >
+                <span>Let's collaborate</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </motion.div>
+
+          {/* STEP 3: CENTRAL HERO PORTRAIT (IMAGE HOVER STATE & SWAP SPECIFICATION) */}
+          <motion.div
+            style={{ scale: portraitScale, opacity: portraitOpacity }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-4 order-1 md:order-2 flex justify-center -mt-8 sm:-mt-14 md:-mt-24 lg:-mt-28"
+          >
+            {/* The central portrait container with two synchronized stacked image layers */}
+            <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 aspect-[3/4] overflow-hidden group cursor-pointer rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] bg-neutral-100 border-2 border-neutral-950/80">
+              {/* Base Layer (Default State): Normal Picture in Grayscale / B&W */}
+              <img
+                src="/normalStylePicture.png"
+                alt="Dhanush Reddy — Portrait Base"
+                className="w-full h-full object-cover object-top grayscale contrast-105 transition-all duration-500 ease-out group-hover:scale-[1.02]"
+              />
+
+              {/* Overlay Layer (Hover State): Full-Color Gojo Style Picture */}
+              <img
+                src="/GojoStylePicture.png"
+                alt="Dhanush Reddy — Gojo Style Portrait Hover"
+                className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:scale-[1.02]"
+              />
+
+              {/* Floating Hover Indicator Badge */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/90 backdrop-blur-md text-neutral-950 font-mono text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full border border-neutral-300 shadow-sm pointer-events-none group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300 flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-emerald-500" />
+                <span className="group-hover:hidden">Hover for Gojo mode</span>
+                <span className="hidden group-hover:inline">Special Grade ⚡</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT SOCIAL PILL BUTTONS */}
+          <motion.div
+            initial={{ opacity: 0, x: 25 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-4 order-3 flex flex-row md:flex-col items-center md:items-end justify-center md:justify-end gap-2.5 pb-2 md:pb-6"
+          >
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target={social.name !== 'Email' ? '_blank' : undefined}
+                  rel={social.name !== 'Email' ? 'noopener noreferrer' : undefined}
+                  className="w-full sm:w-auto md:w-36 flex items-center justify-center md:justify-start gap-2.5 px-4 py-2 rounded-full border border-neutral-200 bg-white hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{social.name}</span>
+                </a>
+              );
+            })}
+          </motion.div>
+        </div>
       </motion.div>
     </section>
   );
