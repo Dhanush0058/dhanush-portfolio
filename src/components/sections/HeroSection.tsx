@@ -164,11 +164,19 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-4 order-1 md:order-2 flex justify-center items-end -mt-6 sm:-mt-12 md:-mt-16 lg:-mt-20"
           >
-            <div className="relative z-20 flex justify-center items-end max-w-md mx-auto">
+            <div className="relative z-20 flex justify-center items-end max-w-md mx-auto group cursor-pointer">
+              {/* Default Base Layer: Normal Cutout in Grayscale / B&W */}
               <img
                 src="/portrait-cutout.png"
                 alt="Dhanush Reddy — Portrait"
-                className="w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain filter grayscale contrast-110 transition-all duration-500 ease-in-out hover:grayscale-0 hover:scale-105 cursor-pointer select-none"
+                className="w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain filter grayscale contrast-110 transition-all duration-500 ease-in-out group-hover:scale-105 select-none"
+              />
+
+              {/* Hover Overlay Layer: Gojo Style Cutout */}
+              <img
+                src="/gojo-cutout.png"
+                alt="Dhanush Reddy — Gojo Style Portrait"
+                className="absolute inset-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain mx-auto opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:scale-105 select-none pointer-events-none"
               />
             </div>
           </motion.div>
