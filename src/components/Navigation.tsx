@@ -66,7 +66,7 @@ const Navigation = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-3 transition-all duration-300 animate-in fade-in slide-in-from-top-4 duration-300">
       <div
-        className="max-w-[96vw] xl:max-w-[1420px] 2xl:max-w-[1540px] mx-auto rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)] py-2.5 px-4 sm:px-6 transition-all duration-300"
+        className="max-w-[1320px] 2xl:max-w-[1400px] mx-auto rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)] py-2.5 px-4 sm:px-6 transition-all duration-300"
       >
         <div className="flex items-center justify-between gap-3">
           {/* Left Side: Avatar, Name, Availability, Follow */}

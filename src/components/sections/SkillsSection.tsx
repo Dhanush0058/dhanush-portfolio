@@ -76,9 +76,6 @@ const SkillsSection = () => {
                   <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center justify-center p-3 group-hover:bg-neutral-100 transition-colors">
                     <img src={skill.logo} alt={skill.name} className="w-full h-full object-contain" />
                   </div>
-                  <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200">
-                    {skill.level}
-                  </span>
                 </div>
 
                 <h3 className="font-display font-extrabold text-2xl text-neutral-950 mb-1">
@@ -91,16 +88,6 @@ const SkillsSection = () => {
                 <p className="text-neutral-600 text-sm leading-relaxed font-normal">
                   {skill.desc}
                 </p>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="mt-6 pt-4 border-t border-neutral-100">
-                <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-neutral-950 rounded-full"
-                    style={{ width: skill.level }}
-                  />
-                </div>
               </div>
             </motion.div>
           ))}

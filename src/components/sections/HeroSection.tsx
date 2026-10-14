@@ -60,14 +60,14 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
     <section
       ref={containerRef}
       id="home"
-      className="relative pt-3 sm:pt-5 pb-12 px-2 sm:px-4 md:px-6 flex justify-center overflow-hidden w-full"
+      className="relative pt-3 sm:pt-5 pb-12 px-4 sm:px-8 md:px-12 flex justify-center overflow-hidden w-full"
     >
-      {/* Centered Framed Canvas Card (Enlarged to fill width cleanly) */}
+      {/* Centered Framed Canvas Card (Balanced width with comfortable breathing room) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-[96vw] xl:max-w-[1420px] 2xl:max-w-[1540px] bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden flex flex-col justify-between"
+        className="relative w-full max-w-[1320px] 2xl:max-w-[1400px] bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden flex flex-col justify-between"
       >
         {/* Subtle inner ambient texture */}
         <div
@@ -83,7 +83,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 flex items-center justify-between gap-4 mb-6 sm:mb-10"
+          className="relative z-20 flex items-center justify-between gap-4 mb-4 sm:mb-6"
         >
           {/* Left Brand Identity */}
           <a
@@ -122,42 +122,40 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           </a>
         </motion.div>
 
-        {/* BACKGROUND SEAMLESS INFINITE MARQUEE LOOP: 'DHANUSH — REDDY' */}
-        <div className="absolute top-[22%] sm:top-[20%] left-0 right-0 overflow-hidden pointer-events-none select-none z-0 opacity-40 sm:opacity-50 flex w-full">
-          <div className="flex shrink-0 animate-marquee items-center justify-around">
-            {[...Array(4)].map((_, i) => (
-              <span
-                key={`m1-${i}`}
-                className="font-display font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase inline-block mx-8 text-stroke"
-              >
-                DHANUSH — REDDY
-              </span>
-            ))}
-          </div>
-          <div className="flex shrink-0 animate-marquee items-center justify-around" aria-hidden="true">
-            {[...Array(4)].map((_, i) => (
-              <span
-                key={`m2-${i}`}
-                className="font-display font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase inline-block mx-8 text-stroke"
-              >
-                DHANUSH — REDDY
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* STEP 2: MAIN TYPOGRAPHY WITH PARALLAX */}
+        {/* STEP 2: HERO INFINITE DISPLAY TITLE MARQUEE (REPLACES STATIC NAME) */}
         <motion.div
           style={{ y: textParallaxY }}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 text-center select-none pt-2 sm:pt-4"
+          className="relative z-10 w-full overflow-hidden pointer-events-none select-none py-2 sm:py-4"
         >
-          <h1 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none uppercase flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-5">
-            <span className="text-stroke">DHANUSH</span>
-            <span className="text-neutral-950">REDDY</span>
-          </h1>
+          <div className="flex w-full overflow-hidden">
+            <div className="flex shrink-0 animate-marquee items-center justify-around">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={`m1-${i}`}
+                  className="font-display font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase inline-flex items-center gap-3 sm:gap-5 mx-6 sm:mx-10"
+                >
+                  <span className="text-stroke">DHANUSH</span>
+                  <span className="text-neutral-950">REDDY</span>
+                  <span className="text-neutral-300 font-light mx-4 select-none">—</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex shrink-0 animate-marquee items-center justify-around" aria-hidden="true">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={`m2-${i}`}
+                  className="font-display font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase inline-flex items-center gap-3 sm:gap-5 mx-6 sm:mx-10"
+                >
+                  <span className="text-stroke">DHANUSH</span>
+                  <span className="text-neutral-950">REDDY</span>
+                  <span className="text-neutral-300 font-light mx-4 select-none">—</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
         {/* STEP 3 & 4: CENTRAL PORTRAIT + FLANKING SUB-CONTENT & SOCIAL PILLS */}
