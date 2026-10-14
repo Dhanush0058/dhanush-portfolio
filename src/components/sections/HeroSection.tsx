@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail, Code } from 'lucide-react';
 
@@ -9,6 +9,17 @@ interface HeroSectionProps {
 
 const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: -500, y: -500 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [isGojoMode, setIsGojoMode] = useState(false);
+
+  const handlePortraitMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   // Scroll physics
   const { scrollYProgress } = useScroll({
@@ -123,7 +134,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 text-center select-none pt-2 sm:pt-4"
         >
-          <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] tracking-tight leading-none uppercase flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-6">
+          <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none uppercase flex items-center justify-center flex-wrap gap-x-3 sm:gap-x-6">
             <span className="text-stroke">DHANUSH</span>
             <span className="text-neutral-950">REDDY</span>
           </h1>
@@ -156,28 +167,53 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             </div>
           </motion.div>
 
-          {/* STEP 3: CENTRAL HERO PORTRAIT CUTOUT (NO CARD/BORDER, SMOOTH HOVER) */}
+          {/* STEP 3: CENTRAL HERO PORTRAIT CUTOUT WITH RADIAL CURSOR REVEAL */}
           <motion.div
             style={{ scale: portraitScale, opacity: portraitOpacity }}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:col-span-4 order-1 md:order-2 flex justify-center items-end -mt-6 sm:-mt-12 md:-mt-16 lg:-mt-20"
+            className="md:col-span-4 order-1 md:order-2 flex flex-col justify-end items-center -mt-6 sm:-mt-10 md:-mt-16 lg:-mt-20"
           >
-            <div className="relative z-20 flex justify-center items-end max-w-md mx-auto group cursor-pointer">
-              {/* Default Base Layer: Normal Cutout in Grayscale / B&W */}
+            <div
+              className="relative w-full max-w-lg lg:max-w-xl mx-auto overflow-hidden select-none cursor-crosshair"
+              onMouseMove={handlePortraitMouseMove}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {/* Base Layer: Full portrait rendered in grayscale */}
               <img
                 src="/portrait-cutout.png"
-                alt="Dhanush Reddy — Portrait"
-                className="w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain filter grayscale contrast-110 transition-all duration-500 ease-in-out group-hover:scale-105 select-none"
+                alt="Dhanush Reddy — Grayscale Portrait"
+                className="w-full max-h-[62vh] object-contain filter grayscale contrast-110 pointer-events-none transition-transform duration-500 ease-out"
               />
 
-              {/* Hover Overlay Layer: Gojo Style Cutout */}
+              {/* Masked Color Layer (Reveals only under cursor within ~125px) */}
               <img
-                src="/gojo-cutout.png"
-                alt="Dhanush Reddy — Gojo Style Portrait"
-                className="absolute inset-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain mx-auto opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:scale-105 select-none pointer-events-none"
+                src={isGojoMode ? '/gojo-cutout.png' : '/portrait-cutout.png'}
+                alt="Dhanush Reddy — Color Reveal"
+                className="absolute inset-0 w-full max-h-[62vh] object-contain pointer-events-none transition-opacity duration-300"
+                style={{
+                  opacity: isHovered ? 1 : 0,
+                  WebkitClipPath: `circle(125px at ${mousePos.x}px ${mousePos.y}px)`,
+                  clipPath: `circle(125px at ${mousePos.x}px ${mousePos.y}px)`,
+                }}
               />
+            </div>
+
+            {/* Mode Switch Pill: Natural Color vs Gojo Mode */}
+            <div className="mt-2 flex items-center justify-center">
+              <button
+                type="button"
+                onClick={() => setIsGojoMode((prev) => !prev)}
+                className="font-mono text-[11px] px-3.5 py-1 rounded-full border border-neutral-200 bg-white hover:border-neutral-900 text-neutral-700 hover:text-neutral-950 transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
+                title="Toggle between natural color lens and Gojo mode spotlight"
+              >
+                <span className="text-neutral-400">Spotlight:</span>
+                <span className="font-bold text-neutral-900">
+                  {isGojoMode ? '⚡ Gojo Mode' : '🎨 Natural Color'}
+                </span>
+              </button>
             </div>
           </motion.div>
 
