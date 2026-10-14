@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Code2, Brain, Shield, Zap } from 'lucide-react';
+import { Code2, Brain, Sparkles, Zap } from 'lucide-react';
 
 const highlights = [
   {
@@ -13,9 +13,9 @@ const highlights = [
     description: 'Developing practical NLP and computer vision systems for real-world impact.',
   },
   {
-    icon: Shield,
-    title: 'Cybersecurity Intern',
-    description: 'Hands-on practical experience at Supraja Technologies securing digital endpoints.',
+    icon: Sparkles,
+    title: 'AI / ML Intern',
+    description: 'Developing practical machine learning pipelines and neural models at Axension AI.',
   },
   {
     icon: Zap,
@@ -74,8 +74,8 @@ const AboutSection = () => {
               <p>
                 Beyond standard software development, I actively delve into{' '}
                 <span className="font-semibold text-neutral-950">Artificial Intelligence & Machine Learning</span>,
-                supplemented by real-world defensive principles gained as a{' '}
-                <span className="font-semibold text-neutral-950">Cybersecurity Intern at Supraja Technologies</span>.
+                supplemented by real-world engineering as an{' '}
+                <span className="font-semibold text-neutral-950">AI/ML Intern at Axension AI</span> and open-source contributor.
               </p>
             </div>
 

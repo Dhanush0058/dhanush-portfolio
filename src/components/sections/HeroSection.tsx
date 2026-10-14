@@ -99,6 +99,9 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             <a href="#work" className="hover:text-neutral-950 transition-colors">
               Work <span className="font-mono text-neutral-400 text-xs">[2]</span>
             </a>
+            <a href="#experience" className="hover:text-neutral-950 transition-colors">
+              Experience
+            </a>
             <a href="#about" className="hover:text-neutral-950 transition-colors">
               About
             </a>

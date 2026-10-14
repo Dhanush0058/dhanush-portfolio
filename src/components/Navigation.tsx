@@ -160,7 +160,7 @@ const Navigation = () => {
 
           {/* Quick Nav Links (Middle - Desktop) */}
           <nav className="hidden lg:flex items-center gap-6 font-mono text-xs">
-            {['work', 'about', 'skills', 'education', 'achievements'].map((link) => (
+            {['work', 'experience', 'skills', 'about', 'education', 'achievements'].map((link) => (
               <a
                 key={link}
                 href={`#${link}`}
@@ -253,7 +253,7 @@ const Navigation = () => {
               isDark ? 'border-neutral-800 text-white' : 'border-neutral-200/80 text-black'
             }`}
           >
-            {['work', 'about', 'skills', 'education', 'achievements', 'contact'].map((item) => (
+            {['work', 'experience', 'skills', 'about', 'education', 'achievements', 'contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item}`}
