@@ -44,26 +44,52 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      await addDoc(collection(db, 'messages'), {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-        timestamp: serverTimestamp(),
+      // 1. Send direct real-time email notification to Dhanush's Gmail
+      const emailResponse = await fetch('https://formsubmit.co/ajax/dhanushr672@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Message from ${formData.name}`,
+          _cc: 'dhanushreddy672@gmail.com',
+          _replyto: formData.email,
+          _template: 'table',
+          _captcha: 'false',
+        }),
       });
+
+      // 2. Also persist to Firestore as database backup
+      if (db) {
+        try {
+          await addDoc(collection(db, 'messages'), {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            timestamp: serverTimestamp(),
+          });
+        } catch (dbErr) {
+          console.warn('Firestore backup failed, but email was dispatched:', dbErr);
+        }
+      }
 
       setIsSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
 
       toast({
-        title: 'Transmission Received! 🚀',
-        description: "Thank you for reaching out, Dhanush will respond shortly.",
+        title: 'Transmission Dispatched! 🚀',
+        description: "Your message has been emailed directly to Dhanush's inbox.",
       });
 
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch {
       toast({
         title: 'Transmission Failed',
-        description: 'Something went wrong. Please reach out via email or GitHub.',
+        description: 'Something went wrong. Please reach out directly via dhanushr672@gmail.com',
         variant: 'destructive',
       });
     } finally {
@@ -106,7 +132,7 @@ const ContactSection = () => {
 
               <div className="space-y-4">
                 <a
-                  href="mailto:dhanushreddy672@gmail.com"
+                  href="mailto:dhanushr672@gmail.com"
                   className="flex items-center gap-3.5 p-3 rounded-xl border border-neutral-200/80 hover:border-neutral-950 hover:bg-neutral-50 transition-all group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-900 group-hover:bg-neutral-950 group-hover:text-white transition-colors">
@@ -115,7 +141,7 @@ const ContactSection = () => {
                   <div className="min-w-0">
                     <p className="font-mono text-[10px] text-neutral-500 uppercase">Email</p>
                     <p className="font-medium text-xs sm:text-sm text-neutral-900 truncate">
-                      dhanushreddy672@gmail.com
+                      dhanushr672@gmail.com
                     </p>
                   </div>
                 </a>
