@@ -101,7 +101,7 @@ const ContactSection = () => {
     <section
       id="contact"
       data-theme="light"
-      className="relative min-h-screen py-20 md:py-28 section-light snap-section z-70 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center"
+      className="relative min-h-screen py-24 md:py-32 section-light snap-section z-70 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
     >
       <div className="section-container">
         <motion.div
@@ -110,12 +110,12 @@ const ContactSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag">
-            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-            08 // TRANSMISSION
+          <div className="section-tag text-[#666666]">
+            <span className="w-2 h-2 rounded-full bg-[#111111] inline-block"></span>
+            07 // TRANSMISSION
           </div>
-          <h2 className="section-title">GET IN TOUCH</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-[#111111]">GET IN TOUCH</h2>
+          <p className="section-subtitle text-[#666666]">
             Have an interesting project, question, or want to explore collaboration? Send a dispatch.
           </p>
         </motion.div>
@@ -129,34 +129,34 @@ const ContactSection = () => {
         >
           {/* Direct Info Card */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="neo-card bg-white p-7">
-              <h3 className="font-display font-bold text-lg text-neutral-950 mb-4">
+            <div className="neo-card bg-white border border-black/10 p-7 shadow-sm">
+              <h3 className="font-display font-bold text-lg text-[#111111] mb-4">
                 DIRECT CHANNELS
               </h3>
 
               <div className="space-y-4">
                 <a
                   href="mailto:dhanushr672@gmail.com"
-                  className="flex items-center gap-3.5 p-3 rounded-xl border border-neutral-200/80 hover:border-neutral-950 hover:bg-neutral-50 transition-all group"
+                  className="flex items-center gap-3.5 p-3 rounded-xl border border-black/10 hover:border-[#111111] hover:bg-neutral-50 transition-all group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-900 group-hover:bg-neutral-950 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] text-neutral-500 uppercase">Email</p>
-                    <p className="font-medium text-xs sm:text-sm text-neutral-900 truncate">
+                    <p className="font-mono text-[10px] text-[#666666] uppercase">Email</p>
+                    <p className="font-medium text-xs sm:text-sm text-[#111111] truncate">
                       dhanushr672@gmail.com
                     </p>
                   </div>
                 </a>
 
-                <div className="flex items-center gap-3.5 p-3 rounded-xl border border-neutral-200/80 bg-neutral-50/50">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-900">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl border border-black/10 bg-neutral-50/50">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-[#111111]">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="font-mono text-[10px] text-neutral-500 uppercase">Location</p>
-                    <p className="font-medium text-xs sm:text-sm text-neutral-900">
+                    <p className="font-mono text-[10px] text-[#666666] uppercase">Location</p>
+                    <p className="font-medium text-xs sm:text-sm text-[#111111]">
                       Hyderabad, Telangana, India
                     </p>
                   </div>
@@ -164,21 +164,21 @@ const ContactSection = () => {
               </div>
 
               {/* Social Channels */}
-              <div className="mt-6 pt-6 border-t border-neutral-100 flex gap-2">
+              <div className="mt-6 pt-6 border-t border-black/10 flex gap-2">
                 <a
                   href="https://github.com/Dhanush0058"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs font-semibold transition-all duration-200"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-black/10 hover:border-[#111111] hover:bg-[#111111] hover:text-white text-[#111111] text-xs font-semibold transition-all duration-200"
                 >
                   <Github className="w-3.5 h-3.5" />
                   <span>GitHub</span>
                 </a>
                 <a
-                  href="https://linkedin.com/in/dhanushreddy"
+                  href="https://www.linkedin.com/in/dhanush-reddy-50551b309/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs font-semibold transition-all duration-200"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-black/10 hover:border-[#111111] hover:bg-[#111111] hover:text-white text-[#111111] text-xs font-semibold transition-all duration-200"
                 >
                   <Linkedin className="w-3.5 h-3.5" />
                   <span>LinkedIn</span>
@@ -186,7 +186,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="neo-card bg-neutral-950 text-white p-7">
+            <div className="neo-card bg-[#111111] text-white p-7 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="font-mono text-xs font-semibold tracking-wider text-neutral-300">
@@ -200,14 +200,14 @@ const ContactSection = () => {
           </div>
 
           {/* Form Card */}
-          <div className="lg:col-span-7 neo-card bg-white p-7 sm:p-9">
-            <h3 className="font-display font-bold text-xl text-neutral-950 mb-6">
+          <div className="lg:col-span-7 neo-card bg-white border border-black/10 p-7 sm:p-9 shadow-sm">
+            <h3 className="font-display font-bold text-xl text-[#111111] mb-6">
               SEND A MESSAGE
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                <label className="block font-mono text-xs font-semibold text-[#666666] uppercase mb-2">
                   Name / Organization
                 </label>
                 <input
@@ -216,12 +216,12 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your Name or Team"
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-black/10 focus:border-[#111111] focus:outline-none focus:ring-1 focus:ring-[#111111] font-sans text-sm bg-neutral-50/50 text-[#111111] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                <label className="block font-mono text-xs font-semibold text-[#666666] uppercase mb-2">
                   Email Address
                 </label>
                 <input
@@ -230,12 +230,12 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="your.email@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-black/10 focus:border-[#111111] focus:outline-none focus:ring-1 focus:ring-[#111111] font-sans text-sm bg-neutral-50/50 text-[#111111] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                <label className="block font-mono text-xs font-semibold text-[#666666] uppercase mb-2">
                   Message
                 </label>
                 <textarea
@@ -244,14 +244,14 @@ const ContactSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="What would you like to discuss or build?"
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 resize-none transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-black/10 focus:border-[#111111] focus:outline-none focus:ring-1 focus:ring-[#111111] font-sans text-sm bg-neutral-50/50 text-[#111111] resize-none transition-colors"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="w-full neo-btn bg-neutral-950 hover:bg-neutral-800 disabled:bg-neutral-400 text-white font-semibold py-3.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full neo-btn bg-[#111111] hover:bg-neutral-800 disabled:bg-neutral-400 text-white font-semibold py-3.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isSubmitting ? (
                   <>

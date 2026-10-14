@@ -63,7 +63,7 @@ const AchievementsSection = () => {
     <section
       id="achievements"
       data-theme="dark"
-      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-60 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+      className="relative min-h-screen py-24 md:py-32 section-dark snap-section z-60 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center bg-[#0B0B0B] text-[#F5F5F5]"
     >
       <div className="section-container">
         <motion.div
@@ -72,12 +72,12 @@ const AchievementsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag text-neutral-400">
+          <div className="section-tag text-[#999999]">
             <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
-            07 // ACCOLADES & HONORS
+            06 // ACCOLADES & HONORS
           </div>
-          <h2 className="section-title text-white">HONORS & ACHIEVEMENTS</h2>
-          <p className="section-subtitle text-neutral-400">
+          <h2 className="section-title text-[#F5F5F5]">HONORS & ACHIEVEMENTS</h2>
+          <p className="section-subtitle text-[#999999]">
             Recognitions from competitive hackathons, national research conventions, and open-source initiatives.
           </p>
         </motion.div>
@@ -111,45 +111,45 @@ const AchievementsSection = () => {
                     transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
                   },
                 }}
-                className={`bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-7 sm:p-8 flex flex-col justify-between group transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.4)] ${
+                className={`bg-[#161616] border border-white/15 hover:border-white/30 rounded-2xl p-7 sm:p-8 flex flex-col justify-between group transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.4)] ${
                   isFeatured ? 'md:col-span-2 lg:col-span-2' : ''
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-neutral-900 text-neutral-300 border border-neutral-800">
+                    <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-neutral-300 border border-white/15">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white mb-2 leading-tight">
+                  <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#F5F5F5] mb-2 leading-tight group-hover:text-white transition-colors">
                     {item.title}
                   </h3>
 
-                  <p className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-4">
+                  <p className="font-mono text-xs font-semibold text-[#999999] uppercase tracking-wider mb-4">
                     {item.event}
                   </p>
 
-                  <p className="text-neutral-400 text-sm leading-relaxed font-normal">
+                  <p className="text-[#999999] text-sm leading-relaxed font-normal">
                     {item.description}
                   </p>
                 </div>
 
                 {item.link && (
-                  <div className="mt-6 pt-4 border-t border-neutral-800/80 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
                     <a
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-neutral-300 transition-colors group/link"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#F5F5F5] hover:text-white transition-colors group/link"
                     >
                       <span>{item.linkText || 'View Details'}</span>
                       <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                     </a>
-                    <span className="font-mono text-[10px] text-neutral-500 uppercase">Verified</span>
+                    <span className="font-mono text-[10px] text-[#999999] uppercase">Verified</span>
                   </div>
                 )}
               </motion.article>

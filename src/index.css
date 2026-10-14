@@ -182,14 +182,27 @@
     @apply text-neutral-600 text-base md:text-lg max-w-2xl mb-12 font-normal leading-relaxed;
   }
 
-  /* Alternating Section Themes */
-  .section-light {
-    background-color: #F5F5F5;
-    color: #111111;
+  /* Global Theme Color Tokens */
+  .section-light,
+  .theme-light {
+    --theme-bg: #F5F5F5;
+    --theme-primary: #111111;
+    --theme-secondary: #666666;
+    --theme-card: #FFFFFF;
+    --theme-border: rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5 !important;
+    color: #111111 !important;
   }
-  .section-dark {
-    background-color: #0A0909;
-    color: #FDFDFD;
+
+  .section-dark,
+  .theme-dark {
+    --theme-bg: #0B0B0B;
+    --theme-primary: #F5F5F5;
+    --theme-secondary: #999999;
+    --theme-card: #161616;
+    --theme-border: rgba(255, 255, 255, 0.15);
+    background-color: #0B0B0B !important;
+    color: #F5F5F5 !important;
   }
 
   /* Dark mode text stroke */

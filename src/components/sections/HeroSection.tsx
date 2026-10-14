@@ -61,14 +61,14 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
       ref={containerRef}
       id="home"
       data-theme="light"
-      className="relative min-h-screen py-4 sm:py-6 px-4 sm:px-8 md:px-12 flex flex-col justify-center overflow-hidden w-full section-light snap-section z-10"
+      className="relative min-h-screen py-24 md:py-32 px-4 sm:px-8 md:px-12 flex flex-col justify-center overflow-hidden w-full section-light snap-section z-10 bg-[#F5F5F5] text-[#111111]"
     >
       {/* Centered Framed Canvas Card (Balanced width with comfortable breathing room) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-[1320px] 2xl:max-w-[1400px] bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden flex flex-col justify-between"
+        className="relative w-full max-w-[1320px] 2xl:max-w-[1400px] mx-auto bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-black/10 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden flex flex-col justify-between"
       >
         {/* Subtle inner ambient texture */}
         <div
@@ -89,32 +89,29 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           {/* Left Brand Identity */}
           <a
             href="#home"
-            className="font-display font-bold text-sm sm:text-base text-neutral-950 tracking-tight hover:text-neutral-700 transition-colors"
+            className="font-display font-bold text-sm sm:text-base text-[#111111] tracking-tight hover:text-neutral-700 transition-colors"
           >
             DHANUSH REDDY
           </a>
 
           {/* Quick Nav Links (matching screenshot) */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-neutral-600">
-            <a href="#work" className="hover:text-neutral-950 transition-colors">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-[#666666]">
+            <a href="#work" className="hover:text-[#111111] transition-colors">
               Work <span className="font-mono text-neutral-400 text-xs">[2]</span>
             </a>
-            <a href="#experience" className="hover:text-neutral-950 transition-colors">
-              Experience
-            </a>
-            <a href="#about" className="hover:text-neutral-950 transition-colors">
+            <a href="#about" className="hover:text-[#111111] transition-colors">
               About
             </a>
-            <a href="#skills" className="hover:text-neutral-950 transition-colors">
-              Stack
-            </a>
-            <a href="#education" className="hover:text-neutral-950 transition-colors">
+            <a href="#education" className="hover:text-[#111111] transition-colors">
               Education
             </a>
-            <a href="#achievements" className="hover:text-neutral-950 transition-colors">
-              Achievements
+            <a href="#skills" className="hover:text-[#111111] transition-colors">
+              Stack
             </a>
-            <a href="#contact" className="hover:text-neutral-950 transition-colors">
+            <a href="#achievements" className="hover:text-[#111111] transition-colors">
+              Accolades
+            </a>
+            <a href="#contact" className="hover:text-[#111111] transition-colors">
               Contact
             </a>
           </nav>

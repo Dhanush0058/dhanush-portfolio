@@ -66,7 +66,7 @@ const ExperienceSection = () => {
     <section
       id="experience"
       data-theme="light"
-      className="relative min-h-screen py-20 md:py-28 section-light snap-section z-25 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center"
+      className="relative min-h-screen py-24 md:py-32 section-light snap-section z-25 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
     >
       <div className="section-container">
         <motion.div
@@ -75,12 +75,12 @@ const ExperienceSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag">
-            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-            02 // PROFESSIONAL CAREER
+          <div className="section-tag text-[#666666]">
+            <span className="w-2 h-2 rounded-full bg-[#111111] inline-block"></span>
+            03 // PROFESSIONAL CAREER
           </div>
-          <h2 className="section-title">WORK EXPERIENCE</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-[#111111]">WORK EXPERIENCE</h2>
+          <p className="section-subtitle text-[#666666]">
             Internships, open-source initiatives, and engineering contributions across AI/ML and modern web development.
           </p>
         </motion.div>
@@ -115,13 +115,13 @@ const ExperienceSection = () => {
                     transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
                   },
                 }}
-                className="neo-card bg-white p-7 sm:p-9 flex flex-col justify-between group hover:border-neutral-950 transition-all duration-300"
+                className="neo-card bg-white border border-black/10 p-7 sm:p-9 flex flex-col justify-between group hover:border-[#111111] transition-all duration-300 shadow-sm"
               >
                 <div>
                   {/* Top Bar inside Card */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-950 group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300">
+                      <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-black/10 flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
                         <Icon className="w-5 h-5" />
                       </div>
                       <div>

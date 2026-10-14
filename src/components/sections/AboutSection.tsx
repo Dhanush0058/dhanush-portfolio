@@ -29,7 +29,7 @@ const AboutSection = () => {
     <section
       id="about"
       data-theme="light"
-      className="relative min-h-screen py-20 md:py-28 section-light snap-section z-30 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center"
+      className="relative min-h-screen py-24 md:py-32 section-light snap-section z-30 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
     >
       <div className="section-container">
         <motion.div
@@ -38,12 +38,12 @@ const AboutSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag">
-            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-            02 // IDENTITY
+          <div className="section-tag text-[#666666]">
+            <span className="w-2 h-2 rounded-full bg-[#111111] inline-block"></span>
+            03 // IDENTITY
           </div>
-          <h2 className="section-title">ABOUT ME</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-[#111111]">ABOUT ME</h2>
+          <p className="section-subtitle text-[#666666]">
             Building software driven by curiosity, analytical precision, and modern craftsmanship.
           </p>
         </motion.div>
@@ -55,9 +55,9 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
-            className="lg:col-span-7 neo-card bg-white p-8 sm:p-10"
+            className="lg:col-span-7 neo-card bg-white border border-black/10 p-8 sm:p-10 shadow-sm"
           >
-            <div className="space-y-6 text-neutral-700 text-base md:text-lg leading-relaxed">
+            <div className="space-y-6 text-[#111111] text-base md:text-lg leading-relaxed">
               <p>
                 I'm a <span className="font-semibold text-neutral-950">B.Tech Information Technology</span> student
                 at <span className="font-semibold text-neutral-950">Vidya Jyothi Institute of Technology</span> (VJIT, Hyderabad).
@@ -123,16 +123,16 @@ const AboutSection = () => {
                       transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
                     },
                   }}
-                  className="neo-card bg-white p-5 sm:p-6 flex items-start gap-4 hover:border-neutral-900 transition-colors"
+                  className="neo-card bg-white border border-black/10 p-5 sm:p-6 flex items-start gap-4 hover:border-neutral-900 transition-colors shadow-sm"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 text-neutral-900">
+                  <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-black/10 flex items-center justify-center flex-shrink-0 text-[#111111]">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-base text-neutral-950 mb-1">
+                    <h3 className="font-display font-bold text-base text-[#111111] mb-1">
                       {item.title}
                     </h3>
-                    <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed">
+                    <p className="text-[#666666] text-xs sm:text-sm leading-relaxed">
                       {item.description}
                     </p>
                   </div>

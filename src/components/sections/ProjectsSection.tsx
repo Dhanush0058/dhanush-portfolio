@@ -57,7 +57,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
     <section
       id="work"
       data-theme="dark"
-      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+      className="relative min-h-screen py-24 md:py-32 section-dark snap-section z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center bg-[#0B0B0B] text-[#F5F5F5]"
     >
       <div className="section-container">
         {/* Section Header with Stagger */}
@@ -69,12 +69,12 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
         >
           <div>
-            <div className="section-tag text-neutral-400">
+            <div className="section-tag text-[#999999]">
               <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
               01 // INDEXED WORKS
             </div>
-            <h2 className="section-title text-white">FEATURED WORK</h2>
-            <p className="text-neutral-400 text-sm md:text-base font-normal max-w-xl">
+            <h2 className="section-title text-[#F5F5F5]">FEATURED WORK</h2>
+            <p className="text-[#999999] text-sm md:text-base font-normal max-w-xl">
               Engineered with clean code, modern architectures, and rigorous problem-solving.
             </p>
           </div>
@@ -89,8 +89,8 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                   onClick={() => handleSelect(cat)}
                   className={`px-3.5 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${
                     active
-                      ? 'bg-white text-black border-white font-semibold shadow-sm'
-                      : 'bg-[#161616] hover:bg-[#222222] text-neutral-400 hover:text-white border-neutral-800'
+                      ? 'bg-[#F5F5F5] text-[#111111] border-[#F5F5F5] font-semibold shadow-sm'
+                      : 'bg-[#161616] hover:bg-[#222222] text-[#999999] hover:text-white border-white/10'
                   }`}
                 >
                   [ {cat} ]
@@ -100,7 +100,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
           </div>
         </motion.div>
 
-        {/* Projects Grid with whileInView Stagger (y: 40 -> 0, stagger: 0.12s) */}
+        {/* Projects Grid with whileInView Stagger */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -134,16 +134,16 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                     },
                   }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-7 sm:p-9 flex flex-col justify-between group relative overflow-hidden transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                  className="bg-[#161616] border border-white/15 hover:border-white/30 rounded-2xl p-7 sm:p-9 flex flex-col justify-between group relative overflow-hidden transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                 >
                   {/* Top Bar inside Card */}
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-6">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                        <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
                           <Icon className="w-5 h-5" />
                         </div>
-                        <span className="font-mono text-xs font-semibold tracking-wider text-neutral-400 uppercase">
+                        <span className="font-mono text-xs font-semibold tracking-wider text-[#999999] uppercase">
                           {project.type}
                         </span>
                       </div>
@@ -154,7 +154,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-full border border-neutral-800 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
+                            className="p-2 rounded-full border border-white/10 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
                             aria-label="View on GitHub"
                             title="GitHub Repository"
                           >
@@ -165,7 +165,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full border border-neutral-800 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
+                          className="p-2 rounded-full border border-white/10 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
                           aria-label="Open Project"
                           title="Open Project"
                         >
@@ -175,24 +175,24 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white mb-3 group-hover:text-neutral-300 transition-colors">
+                    <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#F5F5F5] mb-3 group-hover:text-white transition-colors">
                       <a href={project.github} target="_blank" rel="noopener noreferrer">
                         {project.title}
                       </a>
                     </h3>
 
-                    <p className="text-neutral-400 text-sm leading-relaxed mb-6 font-normal">
+                    <p className="text-[#999999] text-sm leading-relaxed mb-6 font-normal">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Bottom Tags */}
-                  <div className="pt-4 border-t border-neutral-800/80 mt-auto">
+                  <div className="pt-4 border-t border-white/10 mt-auto">
                     <ul className="flex flex-wrap gap-1.5">
                       {project.tags.map((tag) => (
                         <li
                           key={tag}
-                          className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-neutral-900 text-neutral-300 border border-neutral-800"
+                          className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-white/5 text-neutral-300 border border-white/10"
                         >
                           {tag}
                         </li>

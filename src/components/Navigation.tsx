@@ -16,26 +16,38 @@ const Navigation = () => {
   const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 280);
-
-      // Detect theme of section currently under or closest to the navbar
-      const sections = document.querySelectorAll('section[data-theme]');
-      const scrollPos = window.scrollY + 130;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const sec = sections[i] as HTMLElement;
-        if (sec.offsetTop <= scrollPos) {
-          const theme = sec.getAttribute('data-theme') as 'light' | 'dark';
-          if (theme) setActiveTheme(theme);
-          break;
-        }
-      }
+    const handleScrollVisibility = () => {
+      setIsScrolled(window.scrollY > 240);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScrollVisibility, { passive: true });
+    handleScrollVisibility();
+
+    // IntersectionObserver for strict theme detection as sections scroll into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = entry.target.getAttribute('data-theme') as 'light' | 'dark';
+            if (theme) {
+              setActiveTheme(theme);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -65% 0px',
+        threshold: [0, 0.1, 0.25],
+      }
+    );
+
+    const sections = document.querySelectorAll('section[data-theme]');
+    sections.forEach((sec) => observer.observe(sec));
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollVisibility);
+      observer.disconnect();
+    };
   }, []);
 
   const handleFollowToggle = () => {
@@ -87,8 +99,8 @@ const Navigation = () => {
       <div
         className={`max-w-[1320px] 2xl:max-w-[1400px] mx-auto rounded-2xl backdrop-blur-md py-2.5 px-4 sm:px-6 transition-colors duration-500 ease-in-out border ${
           isDark
-            ? 'bg-[#0A0909]/90 border-neutral-800 text-white shadow-[0_8px_30px_rgba(0,0,0,0.6)]'
-            : 'bg-white/90 border-neutral-200/90 text-neutral-950 shadow-[0_8px_30px_rgb(0,0,0,0.08)]'
+            ? 'bg-[#0B0B0B]/90 border-neutral-800 text-[#F5F5F5] shadow-[0_8px_30px_rgba(0,0,0,0.6)]'
+            : 'bg-[#F5F5F5]/95 border-neutral-300 text-[#111111] shadow-[0_8px_30px_rgb(0,0,0,0.06)]'
         }`}
       >
         <div className="flex items-center justify-between gap-3">
@@ -98,7 +110,7 @@ const Navigation = () => {
             <a href="#home" className="relative group flex-shrink-0">
               <div
                 className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 shadow-sm transition-all duration-500 ease-in-out group-hover:scale-105 ${
-                  isDark ? 'border-neutral-600 bg-neutral-900' : 'border-neutral-900 bg-neutral-100'
+                  isDark ? 'border-neutral-600 bg-neutral-900' : 'border-neutral-900 bg-white'
                 }`}
               >
                 <img
@@ -118,14 +130,14 @@ const Navigation = () => {
                 <a
                   href="#home"
                   className={`font-display font-bold text-sm sm:text-base tracking-tight truncate transition-colors duration-500 ease-in-out ${
-                    isDark ? 'text-white hover:text-neutral-300' : 'text-black hover:text-neutral-700'
+                    isDark ? 'text-[#F5F5F5] hover:text-white' : 'text-[#111111] hover:text-neutral-700'
                   }`}
                 >
                   Dhanush Reddy
                 </a>
                 <span
                   className={`text-[11px] sm:text-xs font-mono truncate transition-colors duration-500 ease-in-out ${
-                    isDark ? 'text-neutral-400' : 'text-neutral-500'
+                    isDark ? 'text-[#999999]' : 'text-[#666666]'
                   }`}
                 >
                   Portfolio / 2026
@@ -140,10 +152,10 @@ const Navigation = () => {
                 isFollowing
                   ? isDark
                     ? 'bg-neutral-800 text-white border-neutral-700'
-                    : 'bg-neutral-100 text-neutral-800 border-neutral-300'
+                    : 'bg-neutral-200 text-[#111111] border-neutral-300'
                   : isDark
                   ? 'bg-neutral-900 hover:bg-white text-white hover:text-black border-neutral-700 hover:border-white shadow-sm'
-                  : 'bg-white hover:bg-neutral-900 text-black hover:text-white border-neutral-300 hover:border-neutral-900 shadow-sm'
+                  : 'bg-white hover:bg-[#111111] text-[#111111] hover:text-white border-neutral-300 hover:border-[#111111] shadow-sm'
               }`}
               title="Follow on GitHub / Updates"
             >
@@ -160,14 +172,14 @@ const Navigation = () => {
 
           {/* Quick Nav Links (Middle - Desktop) */}
           <nav className="hidden lg:flex items-center gap-6 font-mono text-xs">
-            {['work', 'experience', 'skills', 'about', 'education', 'achievements'].map((link) => (
+            {['work', 'about', 'education', 'skills', 'achievements', 'contact'].map((link) => (
               <a
                 key={link}
                 href={`#${link}`}
                 className={`transition-colors duration-500 ease-in-out ${
                   isDark
-                    ? 'text-neutral-400 hover:text-white'
-                    : 'text-neutral-600 hover:text-black'
+                    ? 'text-[#999999] hover:text-white'
+                    : 'text-[#666666] hover:text-[#111111]'
                 }`}
               >
                 /{link.toUpperCase()}
@@ -185,7 +197,7 @@ const Navigation = () => {
                   ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
                   : isDark
                   ? 'bg-neutral-900/80 hover:bg-neutral-800 border-neutral-700 text-neutral-300'
-                  : 'bg-neutral-50/80 hover:bg-neutral-100 border-neutral-200 text-neutral-700'
+                  : 'bg-white hover:bg-neutral-100 border-neutral-300 text-[#111111]'
               }`}
               aria-label="Like portfolio"
               title="Give a heart"
@@ -206,7 +218,7 @@ const Navigation = () => {
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-500'
                   : isDark
                   ? 'bg-neutral-900/80 hover:bg-neutral-800 border-neutral-700 text-neutral-300'
-                  : 'bg-neutral-50/80 hover:bg-neutral-100 border-neutral-200 text-neutral-700'
+                  : 'bg-white hover:bg-neutral-100 border-neutral-300 text-[#111111]'
               }`}
               aria-label="Bookmark portfolio"
               title="Bookmark this page"
@@ -223,8 +235,8 @@ const Navigation = () => {
               href="#contact"
               className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md transition-all duration-500 ease-in-out transform hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 ${
                 isDark
-                  ? 'bg-white text-black hover:bg-neutral-200'
-                  : 'bg-neutral-950 text-white hover:bg-neutral-800'
+                  ? 'bg-[#F5F5F5] text-[#111111] hover:bg-white'
+                  : 'bg-[#111111] text-white hover:bg-neutral-800'
               }`}
             >
               <span>Get in touch</span>
@@ -250,16 +262,16 @@ const Navigation = () => {
         {isMobileMenuOpen && (
           <div
             className={`lg:hidden mt-3 pt-3 border-t flex flex-col gap-2 font-mono text-xs transition-colors duration-500 ease-in-out ${
-              isDark ? 'border-neutral-800 text-white' : 'border-neutral-200/80 text-black'
+              isDark ? 'border-neutral-800 text-white' : 'border-neutral-300 text-[#111111]'
             }`}
           >
-            {['work', 'experience', 'skills', 'about', 'education', 'achievements', 'contact'].map((item) => (
+            {['work', 'about', 'education', 'skills', 'achievements', 'contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item}`}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-3 py-2 rounded-lg transition-colors ${
-                  isDark ? 'hover:bg-neutral-800 text-neutral-200' : 'hover:bg-neutral-100 text-neutral-800'
+                  isDark ? 'hover:bg-neutral-800 text-neutral-200' : 'hover:bg-neutral-200/70 text-[#111111]'
                 }`}
               >
                 /{item.toUpperCase()}

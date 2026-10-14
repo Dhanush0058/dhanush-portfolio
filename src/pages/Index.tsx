@@ -62,17 +62,30 @@ const Index = () => {
       {/* Top Floating Navigation with dynamic theme adaptation */}
       <Navigation />
 
-      {/* Main Full-Page Sections with Alternating Themes & Curtain Reveal */}
+      {/* Main Full-Page Sections with Strict Alternating Light/Dark Themes & Curtain Reveal */}
       <main className="relative z-10 snap-page">
+        {/* Section 01: Hero [LIGHT THEME] */}
         <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+
+        {/* Section 02: Featured Work [DARK THEME] */}
         <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+
+        {/* Section 03: About & Experience [LIGHT THEME] */}
+        <AboutSection />
         <ExperienceSection />
+
+        {/* Section 04: Education [DARK THEME] */}
+        <EducationSection />
+
+        {/* Section 05: Core Programming & Stack [LIGHT THEME] */}
         <SkillsSection />
         <ToolsSection />
-        <AboutSection />
-        <EducationSection />
+
+        {/* Section 06: Certifications & Accolades [DARK THEME] */}
         <CertificationsSection />
         <AchievementsSection />
+
+        {/* Section 07: Contact / Get in Touch [LIGHT THEME] */}
         <ContactSection />
       </main>
 

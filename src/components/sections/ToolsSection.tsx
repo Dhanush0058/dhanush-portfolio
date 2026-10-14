@@ -19,8 +19,8 @@ const ToolsSection = () => {
   return (
     <section
       id="tools"
-      data-theme="dark"
-      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-40 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+      data-theme="light"
+      className="relative min-h-screen py-24 md:py-32 section-light snap-section z-50 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
     >
       <div className="section-container">
         <motion.div
@@ -29,12 +29,12 @@ const ToolsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag text-neutral-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+          <div className="section-tag text-[#666666]">
+            <span className="w-2 h-2 rounded-full bg-[#111111] inline-block"></span>
             05 // TECH STACK & TOOLS
           </div>
-          <h2 className="section-title text-white">DEVELOPMENT ARSENAL</h2>
-          <p className="section-subtitle text-neutral-400">
+          <h2 className="section-title text-[#111111]">DEVELOPMENT ARSENAL</h2>
+          <p className="section-subtitle text-[#666666]">
             Frameworks, libraries, compilers, and algorithmic platforms utilized daily.
           </p>
         </motion.div>
@@ -64,9 +64,9 @@ const ToolsSection = () => {
                   transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
                 },
               }}
-              className="bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+              className="bg-white border border-black/10 hover:border-[#111111] rounded-2xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-300 shadow-sm"
             >
-              <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center p-2.5 mb-3 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-neutral-100 border border-black/10 flex items-center justify-center p-2.5 mb-3 group-hover:scale-110 transition-transform">
                 <img
                   src={tool.logo}
                   alt={tool.name}
@@ -74,10 +74,10 @@ const ToolsSection = () => {
                   loading="lazy"
                 />
               </div>
-              <span className="font-display font-bold text-sm text-white mb-0.5">
+              <span className="font-display font-bold text-sm text-[#111111] mb-0.5">
                 {tool.name}
               </span>
-              <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+              <span className="font-mono text-[10px] text-[#666666] uppercase tracking-wider">
                 {tool.category}
               </span>
             </motion.div>
