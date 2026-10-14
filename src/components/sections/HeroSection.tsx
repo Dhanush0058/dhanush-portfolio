@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, Github, Linkedin, Mail, Code, Terminal, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Github, Linkedin, Mail, Code } from 'lucide-react';
 
 interface HeroSectionProps {
   activeFilter?: string;
@@ -179,13 +179,6 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
                 alt="Dhanush Reddy — Gojo Style Portrait Hover"
                 className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:scale-[1.02]"
               />
-
-              {/* Floating Hover Indicator Badge */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/90 backdrop-blur-md text-neutral-950 font-mono text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full border border-neutral-300 shadow-sm pointer-events-none group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300 flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-emerald-500" />
-                <span className="group-hover:hidden">Hover for Gojo mode</span>
-                <span className="hidden group-hover:inline">Special Grade ⚡</span>
-              </div>
             </div>
           </motion.div>
 
