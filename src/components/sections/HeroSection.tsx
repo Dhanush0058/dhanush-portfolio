@@ -156,28 +156,19 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             </div>
           </motion.div>
 
-          {/* STEP 3: CENTRAL HERO PORTRAIT (IMAGE HOVER STATE & SWAP SPECIFICATION) */}
+          {/* STEP 3: CENTRAL HERO PORTRAIT CUTOUT (NO CARD/BORDER, SMOOTH HOVER) */}
           <motion.div
             style={{ scale: portraitScale, opacity: portraitOpacity }}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:col-span-4 order-1 md:order-2 flex justify-center -mt-8 sm:-mt-14 md:-mt-24 lg:-mt-28"
+            className="md:col-span-4 order-1 md:order-2 flex justify-center items-end -mt-6 sm:-mt-12 md:-mt-16 lg:-mt-20"
           >
-            {/* The central portrait container with two synchronized stacked image layers */}
-            <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 aspect-[3/4] overflow-hidden group cursor-pointer rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] bg-neutral-100 border-2 border-neutral-950/80">
-              {/* Base Layer (Default State): Normal Picture in Grayscale / B&W */}
+            <div className="relative z-20 flex justify-center items-end max-w-md mx-auto">
               <img
-                src="/normalStylePicture.png"
-                alt="Dhanush Reddy — Portrait Base"
-                className="w-full h-full object-cover object-top grayscale contrast-105 transition-all duration-500 ease-out group-hover:scale-[1.02]"
-              />
-
-              {/* Overlay Layer (Hover State): Full-Color Gojo Style Picture */}
-              <img
-                src="/GojoStylePicture.png"
-                alt="Dhanush Reddy — Gojo Style Portrait Hover"
-                className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:scale-[1.02]"
+                src="/portrait-cutout.png"
+                alt="Dhanush Reddy — Portrait"
+                className="w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain filter grayscale contrast-110 transition-all duration-500 ease-in-out hover:grayscale-0 hover:scale-105 cursor-pointer select-none"
               />
             </div>
           </motion.div>
