@@ -96,7 +96,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           {/* Quick Nav Links (matching screenshot) */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-neutral-600">
             <a href="#work" className="hover:text-neutral-950 transition-colors">
-              Work <span className="font-mono text-neutral-400 text-xs">[4]</span>
+              Work <span className="font-mono text-neutral-400 text-xs">[2]</span>
             </a>
             <a href="#about" className="hover:text-neutral-950 transition-colors">
               About

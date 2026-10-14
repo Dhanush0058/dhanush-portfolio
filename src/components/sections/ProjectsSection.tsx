@@ -12,7 +12,7 @@ const projects = [
     id: 1,
     title: 'SnapClass — AI Attendance System',
     type: 'MAJOR PROJECT',
-    category: ['All', 'AI / ML', 'Python', 'Systems'],
+    category: ['All', 'AI / ML', 'Python'],
     description:
       'High-speed, automated attendance tracking utilizing computer vision and deep learning facial recognition models to eliminate manual rolls.',
     github: 'https://github.com/Dhanush0058/SnapClass-Making-Attendance-Faster-Using-AI',
@@ -32,33 +32,9 @@ const projects = [
     badge: 'NLP System',
     icon: FileText,
   },
-  {
-    id: 3,
-    title: 'Minimalist Portfolio & Interactive Architecture',
-    type: 'CORE WEB APP',
-    category: ['All', 'Web Apps'],
-    description:
-      'High-contrast neo-brutalist portfolio engine engineered with React, Framer Motion, Tailwind CSS, and Firebase Firestore persistence.',
-    github: 'https://github.com/Dhanush0058/dhanush-reddy-portfolio',
-    tags: ['React 18', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-    badge: 'Production Site',
-    icon: Sparkles,
-  },
-  {
-    id: 4,
-    title: 'Java DSA & Algorithmic Problem Solver',
-    type: 'SYSTEMS & DSA',
-    category: ['All', 'Systems'],
-    description:
-      'Curated repository of optimized data structures, recursion, dynamic programming, and graph algorithms solved with optimal time-space complexity.',
-    github: 'https://github.com/Dhanush0058',
-    tags: ['Java', 'Algorithms', 'Data Structures', 'Competitive Coding'],
-    badge: 'Core Problem Solving',
-    icon: FolderGit2,
-  },
 ];
 
-const categories = ['All', 'AI / ML', 'Python', 'Web Apps', 'Systems'];
+const categories = ['All', 'AI / ML', 'Python'];
 
 const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSectionProps) => {
   const [localFilter, setLocalFilter] = useState(activeFilter);
