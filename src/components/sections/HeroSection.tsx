@@ -11,7 +11,6 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: -500, y: -500 });
   const [isHovered, setIsHovered] = useState(false);
-  const [isGojoMode, setIsGojoMode] = useState(false);
 
   const handlePortraitMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -188,32 +187,17 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
                 className="w-full max-h-[62vh] object-contain filter grayscale contrast-110 pointer-events-none transition-transform duration-500 ease-out"
               />
 
-              {/* Masked Color Layer (Reveals only under cursor within ~125px) */}
+              {/* Masked Gojo Layer (Reveals Gojo style picture under cursor within ~135px) */}
               <img
-                src={isGojoMode ? '/gojo-cutout.png' : '/portrait-cutout.png'}
-                alt="Dhanush Reddy — Color Reveal"
+                src="/gojo-cutout.png"
+                alt="Dhanush Reddy — Gojo Style Mode Reveal"
                 className="absolute inset-0 w-full max-h-[62vh] object-contain pointer-events-none transition-opacity duration-300"
                 style={{
                   opacity: isHovered ? 1 : 0,
-                  WebkitClipPath: `circle(125px at ${mousePos.x}px ${mousePos.y}px)`,
-                  clipPath: `circle(125px at ${mousePos.x}px ${mousePos.y}px)`,
+                  WebkitClipPath: `circle(135px at ${mousePos.x}px ${mousePos.y}px)`,
+                  clipPath: `circle(135px at ${mousePos.x}px ${mousePos.y}px)`,
                 }}
               />
-            </div>
-
-            {/* Mode Switch Pill: Natural Color vs Gojo Mode */}
-            <div className="mt-2 flex items-center justify-center">
-              <button
-                type="button"
-                onClick={() => setIsGojoMode((prev) => !prev)}
-                className="font-mono text-[11px] px-3.5 py-1 rounded-full border border-neutral-200 bg-white hover:border-neutral-900 text-neutral-700 hover:text-neutral-950 transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
-                title="Toggle between natural color lens and Gojo mode spotlight"
-              >
-                <span className="text-neutral-400">Spotlight:</span>
-                <span className="font-bold text-neutral-900">
-                  {isGojoMode ? '⚡ Gojo Mode' : '🎨 Natural Color'}
-                </span>
-              </button>
             </div>
           </motion.div>
 
