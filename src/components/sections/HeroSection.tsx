@@ -85,16 +85,13 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-20 flex items-center justify-between gap-4 mb-6 sm:mb-10"
         >
-          {/* Availability Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 shadow-sm">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <span className="font-mono text-xs sm:text-sm font-medium text-neutral-800">
-              Available for New Project
-            </span>
-          </div>
+          {/* Left Brand Identity */}
+          <a
+            href="#home"
+            className="font-display font-bold text-sm sm:text-base text-neutral-950 tracking-tight hover:text-neutral-700 transition-colors"
+          >
+            DHANUSH REDDY
+          </a>
 
           {/* Quick Nav Links (matching screenshot) */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-neutral-600">
