@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const coreSkills = [
   {
     name: 'Python',
@@ -26,19 +28,47 @@ const SkillsSection = () => {
   return (
     <section id="skills" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="section-tag">
-          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-          04 // CAPABILITIES
-        </div>
-        <h2 className="section-title">CORE PROGRAMMING</h2>
-        <p className="section-subtitle">
-          Primary languages utilized for software architecture, computational algorithms, and AI modeling.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            04 // CAPABILITIES
+          </div>
+          <h2 className="section-title">CORE PROGRAMMING</h2>
+          <p className="section-subtitle">
+            Primary languages utilized for software architecture, computational algorithms, and AI modeling.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 },
+            },
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {coreSkills.map((skill) => (
-            <div
+            <motion.div
               key={skill.name}
+              variants={{
+                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                },
+              }}
               className="neo-card bg-white p-7 sm:p-8 flex flex-col justify-between group hover:border-neutral-950 transition-all duration-300"
             >
               <div>
@@ -72,9 +102,9 @@ const SkillsSection = () => {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

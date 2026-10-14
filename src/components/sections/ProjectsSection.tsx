@@ -114,8 +114,22 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
           </div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        {/* Projects Grid with whileInView Stagger */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
+        >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => {
               const Icon = project.icon;
@@ -123,10 +137,16 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                 <motion.article
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      filter: 'blur(0px)',
+                      transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                    },
+                  }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
                   className="neo-card bg-white p-7 sm:p-9 flex flex-col justify-between group relative overflow-hidden"
                 >
                   {/* Top Bar inside Card */}
@@ -196,7 +216,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
               );
             })}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

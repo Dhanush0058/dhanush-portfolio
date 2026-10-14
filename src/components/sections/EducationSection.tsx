@@ -1,4 +1,5 @@
-import { GraduationCap, Calendar, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { GraduationCap, Award } from 'lucide-react';
 
 const education = [
   {
@@ -34,19 +35,47 @@ const EducationSection = () => {
   return (
     <section id="education" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="section-tag">
-          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-          03 // ACADEMIC RECORD
-        </div>
-        <h2 className="section-title">EDUCATION</h2>
-        <p className="section-subtitle">
-          A trajectory of consistent academic distinction and deep foundational discipline.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            03 // ACADEMIC RECORD
+          </div>
+          <h2 className="section-title">EDUCATION</h2>
+          <p className="section-subtitle">
+            A trajectory of consistent academic distinction and deep foundational discipline.
+          </p>
+        </motion.div>
 
-        <div className="space-y-6 max-w-4xl">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.12 },
+            },
+          }}
+          className="space-y-6 max-w-4xl"
+        >
           {education.map((item, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={{
+                hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                },
+              }}
               className="neo-card bg-white p-6 sm:p-8 flex flex-col md:flex-row md:items-start justify-between gap-6 group hover:border-neutral-950 transition-colors"
             >
               <div className="flex items-start gap-4 flex-1">
@@ -81,9 +110,9 @@ const EducationSection = () => {
                   <span>{item.grade}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

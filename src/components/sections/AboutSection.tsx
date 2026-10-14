@@ -1,4 +1,5 @@
-import { Code2, Brain, Shield, Zap, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Code2, Brain, Shield, Zap } from 'lucide-react';
 
 const highlights = [
   {
@@ -27,18 +28,31 @@ const AboutSection = () => {
   return (
     <section id="about" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="section-tag">
-          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-          02 // IDENTITY
-        </div>
-        <h2 className="section-title">ABOUT ME</h2>
-        <p className="section-subtitle">
-          Building software driven by curiosity, analytical precision, and modern craftsmanship.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            02 // IDENTITY
+          </div>
+          <h2 className="section-title">ABOUT ME</h2>
+          <p className="section-subtitle">
+            Building software driven by curiosity, analytical precision, and modern craftsmanship.
+          </p>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Bio Card */}
-          <div className="lg:col-span-7 neo-card bg-white p-8 sm:p-10">
+          <motion.div
+            initial={{ opacity: 0, y: 25, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+            className="lg:col-span-7 neo-card bg-white p-8 sm:p-10"
+          >
             <div className="space-y-6 text-neutral-700 text-base md:text-lg leading-relaxed">
               <p>
                 I'm a <span className="font-semibold text-neutral-950">B.Tech Information Technology</span> student
@@ -75,15 +89,36 @@ const AboutSection = () => {
                 <span>Open for Collaborations</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Highlights Grid */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 },
+              },
+            }}
+            className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4"
+          >
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (
-                <div
+                <motion.div
                   key={index}
+                  variants={{
+                    hidden: { opacity: 0, x: 20, filter: 'blur(4px)' },
+                    visible: {
+                      opacity: 1,
+                      x: 0,
+                      filter: 'blur(0px)',
+                      transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                    },
+                  }}
                   className="neo-card bg-white p-5 sm:p-6 flex items-start gap-4 hover:border-neutral-900 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 text-neutral-900">
@@ -97,10 +132,10 @@ const AboutSection = () => {
                       {item.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
