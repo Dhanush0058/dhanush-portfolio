@@ -256,9 +256,11 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
           {/* Dynamic Scrollable Page Canvas by ID */}
           <div
             id={`page-scroll-${currentPage}`}
-            className="w-full h-full overflow-y-auto overflow-x-hidden flex flex-col justify-start py-8 sm:py-12 overscroll-contain"
+            className={`w-full h-full overflow-y-auto overflow-x-hidden flex flex-col justify-start overscroll-contain ${
+              activePage?.id === 'home' ? 'pt-2 sm:pt-3 pb-6' : 'py-8 sm:py-12'
+            }`}
           >
-            <div className="w-full relative z-20 my-auto">
+            <div className={`w-full relative z-20 ${activePage?.id === 'home' ? 'mt-1 mb-auto' : 'my-auto'}`}>
               {activePage?.component}
             </div>
           </div>
