@@ -128,6 +128,7 @@ const Navigation = () => {
             <a href="#about" className="hover:text-neutral-950 transition-colors">/ABOUT</a>
             <a href="#skills" className="hover:text-neutral-950 transition-colors">/STACK</a>
             <a href="#education" className="hover:text-neutral-950 transition-colors">/JOURNEY</a>
+            <a href="#achievements" className="hover:text-neutral-950 transition-colors">/HONORS</a>
           </nav>
 
           {/* Right Side: Quick Interactions & Primary CTA */}
@@ -219,6 +220,13 @@ const Navigation = () => {
               className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
             >
               /TECH STACK
+            </a>
+            <a
+              href="#achievements"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
+            >
+              /ACHIEVEMENTS
             </a>
             <a
               href="#contact"

@@ -82,7 +82,7 @@ const ContactSection = () => {
         >
           <div className="section-tag">
             <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-            07 // TRANSMISSION
+            08 // TRANSMISSION
           </div>
           <h2 className="section-title">GET IN TOUCH</h2>
           <p className="section-subtitle">
