@@ -1,4 +1,5 @@
-import { Award, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Award, CheckCircle2 } from 'lucide-react';
 
 const certifications = [
   {
@@ -23,19 +24,47 @@ const CertificationsSection = () => {
   return (
     <section id="certifications" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="section-tag">
-          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-          06 // CREDENTIALS
-        </div>
-        <h2 className="section-title">CERTIFICATIONS</h2>
-        <p className="section-subtitle">
-          Verified academic and professional credentials affirming domain mastery.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            06 // CREDENTIALS
+          </div>
+          <h2 className="section-title">CERTIFICATIONS</h2>
+          <p className="section-subtitle">
+            Verified academic and professional credentials affirming domain mastery.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.12 },
+            },
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
+        >
           {certifications.map((cert) => (
-            <div
+            <motion.div
               key={cert.title}
+              variants={{
+                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                },
+              }}
               className="neo-card bg-white p-7 sm:p-8 flex flex-col justify-between group hover:border-neutral-950 transition-colors"
             >
               <div>
@@ -64,9 +93,9 @@ const CertificationsSection = () => {
                   {cert.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

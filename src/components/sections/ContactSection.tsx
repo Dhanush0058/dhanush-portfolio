@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Send, Mail, MapPin, Loader2, CheckCircle2, Github, Linkedin, ArrowUpRight } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -73,16 +74,29 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="section-tag">
-          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
-          07 // TRANSMISSION
-        </div>
-        <h2 className="section-title">GET IN TOUCH</h2>
-        <p className="section-subtitle">
-          Have an interesting project, question, or want to explore collaboration? Send a dispatch.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            07 // TRANSMISSION
+          </div>
+          <h2 className="section-title">GET IN TOUCH</h2>
+          <p className="section-subtitle">
+            Have an interesting project, question, or want to explore collaboration? Send a dispatch.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 25, filter: 'blur(4px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-start"
+        >
           {/* Direct Info Card */}
           <div className="lg:col-span-5 space-y-4">
             <div className="neo-card bg-white p-7">
@@ -228,7 +242,7 @@ const ContactSection = () => {
               </button>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

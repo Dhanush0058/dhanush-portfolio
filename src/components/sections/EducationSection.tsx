@@ -62,7 +62,7 @@ const EducationSection = () => {
               transition: { staggerChildren: 0.12 },
             },
           }}
-          className="space-y-6 max-w-4xl"
+          className="space-y-6 w-full"
         >
           {education.map((item, index) => (
             <motion.div

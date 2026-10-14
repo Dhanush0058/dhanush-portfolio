@@ -122,7 +122,31 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           </a>
         </motion.div>
 
-        {/* STEP 2: MAIN TYPOGRAPHY WITH PARALLAX (REDUCED SIZE TO PROPORTIONALLY FRAME PORTRAIT) */}
+        {/* BACKGROUND SEAMLESS INFINITE MARQUEE LOOP: 'DHANUSH — REDDY' */}
+        <div className="absolute top-[22%] sm:top-[20%] left-0 right-0 overflow-hidden pointer-events-none select-none z-0 opacity-40 sm:opacity-50 flex w-full">
+          <div className="flex shrink-0 animate-marquee items-center justify-around">
+            {[...Array(4)].map((_, i) => (
+              <span
+                key={`m1-${i}`}
+                className="font-display font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase inline-block mx-8 text-stroke"
+              >
+                DHANUSH — REDDY
+              </span>
+            ))}
+          </div>
+          <div className="flex shrink-0 animate-marquee items-center justify-around" aria-hidden="true">
+            {[...Array(4)].map((_, i) => (
+              <span
+                key={`m2-${i}`}
+                className="font-display font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter uppercase inline-block mx-8 text-stroke"
+              >
+                DHANUSH — REDDY
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* STEP 2: MAIN TYPOGRAPHY WITH PARALLAX */}
         <motion.div
           style={{ y: textParallaxY }}
           initial={{ opacity: 0, y: 30 }}

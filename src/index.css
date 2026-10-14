@@ -114,6 +114,24 @@
     }
   }
 
+  /* Seamless infinite marquee animation */
+  @keyframes marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  .animate-marquee {
+    display: flex;
+    flex-shrink: 0;
+    min-width: 100%;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
   /* Minimalist / Neo-brutalist surfaces */
   .neo-box {
     @apply bg-card border border-neutral-200 rounded-2xl;
