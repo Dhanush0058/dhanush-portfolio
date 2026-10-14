@@ -3,6 +3,14 @@ import { Award, CheckCircle2 } from 'lucide-react';
 
 const certifications = [
   {
+    title: 'Programming in Java',
+    issuer: 'NPTEL (National Programme on Technology Enhanced Learning)',
+    date: 'NPTEL Certified',
+    description:
+      'Rigorous certification covering Object-Oriented paradigms, inheritance, polymorphism, multithreading, exception handling, and Java standard library APIs.',
+    badge: 'National Certification',
+  },
+  {
     title: 'Database Management System',
     issuer: 'NPTEL (National Programme on Technology Enhanced Learning)',
     date: 'September 2025',
@@ -55,7 +63,7 @@ const CertificationsSection = () => {
               transition: { staggerChildren: 0.12, delayChildren: 0.1 },
             },
           }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
         >
           {certifications.map((cert) => (
             <motion.div
