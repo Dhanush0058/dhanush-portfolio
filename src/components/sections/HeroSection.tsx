@@ -63,9 +63,9 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
     >
       {/* Centered Framed Canvas Card (Balanced width with comfortable breathing room) */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.97, y: 15 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative w-full max-w-[1320px] 2xl:max-w-[1400px] mx-auto bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-black/10 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden flex flex-col justify-between"
       >
         {/* Subtle inner ambient texture */}
@@ -77,7 +77,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           }}
         />
 
-        {/* STEP 1: TOP BAR INSIDE THE CARD */}
+        {/* TOP BAR: BRAND + NAV + CTA */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,7 +92,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             DHANUSH REDDY
           </a>
 
-          {/* Quick Nav Links (matching screenshot) */}
+          {/* Quick Nav Links */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-sans text-xs sm:text-sm font-medium text-[#666666]">
             <a href="#work" className="hover:text-[#111111] transition-colors">
               Work <span className="font-mono text-neutral-400 text-xs">[2]</span>
@@ -124,12 +124,12 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           </a>
         </motion.div>
 
-        {/* STEP 2: HERO INFINITE DISPLAY TITLE MARQUEE (REPLACES STATIC NAME) */}
+        {/* STAGGER STEP 1: BIG NAME FIRST — FADE, PAN & RISE UP */}
         <motion.div
           style={{ y: textParallaxY }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 45, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 w-full overflow-hidden pointer-events-none select-none py-2 sm:py-4"
         >
           <div className="flex w-full overflow-hidden">
@@ -160,13 +160,13 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
           </div>
         </motion.div>
 
-        {/* STEP 3 & 4: CENTRAL PORTRAIT + FLANKING SUB-CONTENT & SOCIAL PILLS */}
+        {/* STAGGER STEP 2 & 3: FACE PORTRAIT (SECOND), THEN BIO + SOCIALS (THIRD) */}
         <div className="relative z-20 mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-end">
-          {/* LEFT SUB-CONTENT: Title, Bio & Let's Collaborate (col-span-3) */}
+          {/* LEFT SUB-CONTENT: Title, Bio & Button (Enters after face portrait) */}
           <motion.div
-            initial={{ opacity: 0, x: -25 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, x: -35, y: 20 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-3 order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left space-y-3 pb-2 md:pb-6"
           >
             <h2 className="font-display font-bold text-lg sm:text-xl text-neutral-950">
@@ -186,12 +186,12 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             </div>
           </motion.div>
 
-          {/* STEP 3: CENTRAL HERO PORTRAIT (ENLARGED TO col-span-6 DOMINATING CENTER, TIGHTER 70px REVEAL RADIUS) */}
+          {/* STAGGER STEP 2: FACE PORTRAIT SECOND — FADE, PAN AND RISE UPWARDS FROM BELOW */}
           <motion.div
             style={{ scale: portraitScale, opacity: portraitOpacity }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 70, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.95, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-6 order-1 md:order-2 flex flex-col justify-end items-center -mt-8 sm:-mt-14 md:-mt-20 lg:-mt-24"
           >
             <div
@@ -200,7 +200,7 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              {/* Base Layer: Full portrait rendered in grayscale (Enlarged) */}
+              {/* Base Layer: Full portrait rendered in grayscale */}
               <img
                 src="/portrait-cutout.png"
                 alt="Dhanush Reddy — Grayscale Portrait"
@@ -221,29 +221,31 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
             </div>
           </motion.div>
 
-          {/* RIGHT SOCIAL PILL BUTTONS (col-span-3) */}
-          <motion.div
-            initial={{ opacity: 0, x: 25 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="md:col-span-3 order-3 flex flex-row md:flex-col items-center md:items-end justify-center md:justify-end gap-2.5 pb-2 md:pb-6"
-          >
-            {socialLinks.map((social) => {
+          {/* RIGHT SOCIAL PILL BUTTONS (Cascading stagger after face) */}
+          <div className="md:col-span-3 order-3 flex flex-row md:flex-col items-center md:items-end justify-center md:justify-end gap-2.5 pb-2 md:pb-6">
+            {socialLinks.map((social, index) => {
               const Icon = social.icon;
               return (
-                <a
+                <motion.a
                   key={social.name}
                   href={social.href}
                   target={social.name !== 'Email' ? '_blank' : undefined}
                   rel={social.name !== 'Email' ? 'noopener noreferrer' : undefined}
+                  initial={{ opacity: 0, x: 25, y: 10 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 1.15 + index * 0.08,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                   className="w-full sm:w-auto md:w-36 flex items-center justify-center md:justify-start gap-2.5 px-4 py-2 rounded-full border border-neutral-200 bg-white hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:scale-[1.03] active:scale-[0.98]"
                 >
                   <Icon className="w-3.5 h-3.5" />
                   <span>{social.name}</span>
-                </a>
+                </motion.a>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>
