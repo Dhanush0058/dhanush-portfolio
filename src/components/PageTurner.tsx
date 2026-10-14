@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 
 export interface PageItem {
   id: string;
@@ -208,79 +207,6 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
         </motion.div>
       </AnimatePresence>
 
-      {/* Floating Bottom Book Controller (Page Turn Navigator) */}
-      <nav
-        aria-label="Book page navigation"
-        className="fixed bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 sm:gap-3 px-3.5 sm:px-4 py-2 rounded-full border shadow-2xl backdrop-blur-xl transition-all duration-300"
-        style={{
-          backgroundColor: isDark ? 'rgba(16, 16, 16, 0.85)' : 'rgba(255, 255, 255, 0.9)',
-          borderColor: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)',
-          color: isDark ? '#F5F5F5' : '#111111',
-        }}
-      >
-        {/* Previous Page Button */}
-        <button
-          onClick={prevPage}
-          disabled={currentPage === 0}
-          aria-label="Previous page"
-          title="Turn to previous page (or Scroll Up / Arrow Left)"
-          className={`p-1.5 rounded-full transition-all duration-200 cursor-pointer ${
-            currentPage === 0
-              ? 'opacity-25 cursor-not-allowed'
-              : isDark
-              ? 'hover:bg-white/15 active:scale-95'
-              : 'hover:bg-black/10 active:scale-95'
-          }`}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-
-        {/* Center Folio Indicator & Reading Progress */}
-        <div className="flex items-center gap-2 px-1 text-xs font-mono font-medium">
-          <BookOpen className="w-3.5 h-3.5 opacity-60" />
-          <span>
-            {String(currentPage + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
-          </span>
-          <span className="hidden sm:inline opacity-40">•</span>
-          <span className="hidden sm:inline text-[11px] truncate max-w-[140px] uppercase font-semibold">
-            {activePage.title}
-          </span>
-        </div>
-
-        {/* Next Page Button */}
-        <button
-          onClick={nextPage}
-          disabled={currentPage === totalPages - 1}
-          aria-label="Next page"
-          title="Turn to next page (or Scroll Down / Arrow Right)"
-          className={`p-1.5 rounded-full transition-all duration-200 cursor-pointer ${
-            currentPage === totalPages - 1
-              ? 'opacity-25 cursor-not-allowed'
-              : isDark
-              ? 'hover:bg-white/15 active:scale-95'
-              : 'hover:bg-black/10 active:scale-95'
-          }`}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
-
-        {/* Mini Page Dots */}
-        <div className="hidden md:flex items-center gap-1 pl-2 border-l border-current/15">
-          {pages.map((p, idx) => (
-            <button
-              key={p.id}
-              onClick={() => goToPage(idx)}
-              aria-label={`Go to page ${idx + 1}: ${p.title}`}
-              title={`Page ${idx + 1}: ${p.title}`}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentPage
-                  ? 'w-4 bg-current'
-                  : 'w-1.5 bg-current/25 hover:bg-current/60'
-              }`}
-            />
-          ))}
-        </div>
-      </nav>
     </div>
   );
 };
