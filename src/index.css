@@ -181,4 +181,39 @@
   .section-subtitle {
     @apply text-neutral-600 text-base md:text-lg max-w-2xl mb-12 font-normal leading-relaxed;
   }
+
+  /* Alternating Section Themes */
+  .section-light {
+    background-color: #F5F5F5;
+    color: #111111;
+  }
+  .section-dark {
+    background-color: #0A0909;
+    color: #FDFDFD;
+  }
+
+  /* Dark mode text stroke */
+  .text-stroke-dark {
+    -webkit-text-stroke: 1.5px #FFFFFF;
+    color: transparent;
+  }
+  @media (min-width: 640px) {
+    .text-stroke-dark {
+      -webkit-text-stroke: 2.5px #FFFFFF;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-stroke-dark {
+      -webkit-text-stroke: 3.5px #FFFFFF;
+    }
+  }
+
+  /* Full-page scroll snapping & curtain stacking */
+  .snap-page {
+    scroll-snap-type: y proximity;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
 }

@@ -13,11 +13,28 @@ const Navigation = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [activeTheme, setActiveTheme] = useState<'light' | 'dark'>('light');
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 280);
+
+      // Detect theme of section currently under or closest to the navbar
+      const sections = document.querySelectorAll('section[data-theme]');
+      const scrollPos = window.scrollY + 130;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sec = sections[i] as HTMLElement;
+        if (sec.offsetTop <= scrollPos) {
+          const theme = sec.getAttribute('data-theme') as 'light' | 'dark';
+          if (theme) setActiveTheme(theme);
+          break;
+        }
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -63,23 +80,32 @@ const Navigation = () => {
 
   if (!isScrolled) return null;
 
+  const isDark = activeTheme === 'dark';
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-3 transition-all duration-300 animate-in fade-in slide-in-from-top-4 duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-3 transition-all duration-500 ease-in-out animate-in fade-in slide-in-from-top-4">
       <div
-        className="max-w-[1320px] 2xl:max-w-[1400px] mx-auto rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)] py-2.5 px-4 sm:px-6 transition-all duration-300"
+        className={`max-w-[1320px] 2xl:max-w-[1400px] mx-auto rounded-2xl backdrop-blur-md py-2.5 px-4 sm:px-6 transition-colors duration-500 ease-in-out border ${
+          isDark
+            ? 'bg-[#0A0909]/90 border-neutral-800 text-white shadow-[0_8px_30px_rgba(0,0,0,0.6)]'
+            : 'bg-white/90 border-neutral-200/90 text-neutral-950 shadow-[0_8px_30px_rgb(0,0,0,0.08)]'
+        }`}
       >
         <div className="flex items-center justify-between gap-3">
           {/* Left Side: Avatar, Name, Availability, Follow */}
           <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
             {/* Avatar */}
             <a href="#home" className="relative group flex-shrink-0">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-neutral-900 bg-neutral-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 shadow-sm transition-all duration-500 ease-in-out group-hover:scale-105 ${
+                  isDark ? 'border-neutral-600 bg-neutral-900' : 'border-neutral-900 bg-neutral-100'
+                }`}
+              >
                 <img
                   src="/GojoStylePicture.png"
                   alt="Dhanush Reddy Avatar"
                   className="w-full h-full object-cover object-top"
                   onError={(e) => {
-                    // Fallback to placeholder if not loaded
                     (e.target as HTMLElement).style.display = 'none';
                   }}
                 />
@@ -91,11 +117,17 @@ const Navigation = () => {
               <div className="flex items-center gap-2">
                 <a
                   href="#home"
-                  className="font-display font-bold text-sm sm:text-base text-neutral-900 hover:text-neutral-700 tracking-tight truncate"
+                  className={`font-display font-bold text-sm sm:text-base tracking-tight truncate transition-colors duration-500 ease-in-out ${
+                    isDark ? 'text-white hover:text-neutral-300' : 'text-black hover:text-neutral-700'
+                  }`}
                 >
                   Dhanush Reddy
                 </a>
-                <span className="text-[11px] sm:text-xs font-mono text-neutral-500 truncate">
+                <span
+                  className={`text-[11px] sm:text-xs font-mono truncate transition-colors duration-500 ease-in-out ${
+                    isDark ? 'text-neutral-400' : 'text-neutral-500'
+                  }`}
+                >
                   Portfolio / 2026
                 </span>
               </div>
@@ -104,16 +136,20 @@ const Navigation = () => {
             {/* Follow Button */}
             <button
               onClick={handleFollowToggle}
-              className={`hidden sm:inline-flex items-center gap-1 ml-1 text-xs font-semibold px-3 py-1 rounded-full border transition-all duration-200 ${
+              className={`hidden sm:inline-flex items-center gap-1 ml-1 text-xs font-semibold px-3 py-1 rounded-full border transition-colors duration-500 ease-in-out ${
                 isFollowing
-                  ? 'bg-neutral-100 text-neutral-800 border-neutral-300'
-                  : 'bg-white hover:bg-neutral-900 text-neutral-900 hover:text-white border-neutral-300 hover:border-neutral-900 shadow-sm'
+                  ? isDark
+                    ? 'bg-neutral-800 text-white border-neutral-700'
+                    : 'bg-neutral-100 text-neutral-800 border-neutral-300'
+                  : isDark
+                  ? 'bg-neutral-900 hover:bg-white text-white hover:text-black border-neutral-700 hover:border-white shadow-sm'
+                  : 'bg-white hover:bg-neutral-900 text-black hover:text-white border-neutral-300 hover:border-neutral-900 shadow-sm'
               }`}
               title="Follow on GitHub / Updates"
             >
               {isFollowing ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-600" />
+                  <Check className="w-3 h-3 text-emerald-500" />
                   <span>Following</span>
                 </>
               ) : (
@@ -123,12 +159,20 @@ const Navigation = () => {
           </div>
 
           {/* Quick Nav Links (Middle - Desktop) */}
-          <nav className="hidden lg:flex items-center gap-6 font-mono text-xs text-neutral-600">
-            <a href="#work" className="hover:text-neutral-950 transition-colors">/WORK</a>
-            <a href="#about" className="hover:text-neutral-950 transition-colors">/ABOUT</a>
-            <a href="#skills" className="hover:text-neutral-950 transition-colors">/STACK</a>
-            <a href="#education" className="hover:text-neutral-950 transition-colors">/JOURNEY</a>
-            <a href="#achievements" className="hover:text-neutral-950 transition-colors">/HONORS</a>
+          <nav className="hidden lg:flex items-center gap-6 font-mono text-xs">
+            {['work', 'about', 'skills', 'education', 'achievements'].map((link) => (
+              <a
+                key={link}
+                href={`#${link}`}
+                className={`transition-colors duration-500 ease-in-out ${
+                  isDark
+                    ? 'text-neutral-400 hover:text-white'
+                    : 'text-neutral-600 hover:text-black'
+                }`}
+              >
+                /{link.toUpperCase()}
+              </a>
+            ))}
           </nav>
 
           {/* Right Side: Quick Interactions & Primary CTA */}
@@ -136,9 +180,11 @@ const Navigation = () => {
             {/* Heart / Like Button */}
             <button
               onClick={handleLike}
-              className={`flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-full border text-xs font-mono transition-all duration-200 ${
+              className={`flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-full border text-xs font-mono transition-colors duration-500 ease-in-out ${
                 hasLiked
-                  ? 'bg-rose-50 border-rose-200 text-rose-600'
+                  ? 'bg-rose-500/10 border-rose-500/30 text-rose-500'
+                  : isDark
+                  ? 'bg-neutral-900/80 hover:bg-neutral-800 border-neutral-700 text-neutral-300'
                   : 'bg-neutral-50/80 hover:bg-neutral-100 border-neutral-200 text-neutral-700'
               }`}
               aria-label="Like portfolio"
@@ -146,7 +192,7 @@ const Navigation = () => {
             >
               <Heart
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  hasLiked ? 'fill-rose-500 text-rose-500 scale-110' : 'text-neutral-600'
+                  hasLiked ? 'fill-rose-500 text-rose-500 scale-110' : ''
                 }`}
               />
               <span className="hidden sm:inline font-semibold">{likeCount}</span>
@@ -155,9 +201,11 @@ const Navigation = () => {
             {/* Bookmark Button */}
             <button
               onClick={handleBookmark}
-              className={`p-2 rounded-full border text-xs transition-all duration-200 ${
+              className={`p-2 rounded-full border text-xs transition-colors duration-500 ease-in-out ${
                 isBookmarked
-                  ? 'bg-amber-50 border-amber-200 text-amber-600'
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-500'
+                  : isDark
+                  ? 'bg-neutral-900/80 hover:bg-neutral-800 border-neutral-700 text-neutral-300'
                   : 'bg-neutral-50/80 hover:bg-neutral-100 border-neutral-200 text-neutral-700'
               }`}
               aria-label="Bookmark portfolio"
@@ -165,7 +213,7 @@ const Navigation = () => {
             >
               <Bookmark
                 className={`w-3.5 h-3.5 ${
-                  isBookmarked ? 'fill-amber-500 text-amber-500' : 'text-neutral-600'
+                  isBookmarked ? 'fill-amber-500 text-amber-500' : ''
                 }`}
               />
             </button>
@@ -173,7 +221,11 @@ const Navigation = () => {
             {/* Primary CTA: "Get in touch" */}
             <a
               href="#contact"
-              className="neo-btn bg-neutral-950 text-white hover:bg-neutral-800 text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5"
+              className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md transition-all duration-500 ease-in-out transform hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 ${
+                isDark
+                  ? 'bg-white text-black hover:bg-neutral-200'
+                  : 'bg-neutral-950 text-white hover:bg-neutral-800'
+              }`}
             >
               <span>Get in touch</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -182,7 +234,11 @@ const Navigation = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full border border-neutral-200 hover:bg-neutral-100 text-neutral-800 transition-colors"
+              className={`lg:hidden p-2 rounded-full border transition-colors duration-500 ease-in-out ${
+                isDark
+                  ? 'border-neutral-700 hover:bg-neutral-800 text-white'
+                  : 'border-neutral-200 hover:bg-neutral-100 text-black'
+              }`}
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -192,49 +248,23 @@ const Navigation = () => {
 
         {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-3 border-t border-neutral-200/80 flex flex-col gap-2 font-mono text-xs">
-            <a
-              href="#work"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /SELECTED WORK
-            </a>
-            <a
-              href="#about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /ABOUT ME
-            </a>
-            <a
-              href="#education"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /EDUCATION
-            </a>
-            <a
-              href="#skills"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /TECH STACK
-            </a>
-            <a
-              href="#achievements"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /ACHIEVEMENTS
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 transition-colors"
-            >
-              /CONTACT
-            </a>
+          <div
+            className={`lg:hidden mt-3 pt-3 border-t flex flex-col gap-2 font-mono text-xs transition-colors duration-500 ease-in-out ${
+              isDark ? 'border-neutral-800 text-white' : 'border-neutral-200/80 text-black'
+            }`}
+          >
+            {['work', 'about', 'skills', 'education', 'achievements', 'contact'].map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-lg transition-colors ${
+                  isDark ? 'hover:bg-neutral-800 text-neutral-200' : 'hover:bg-neutral-100 text-neutral-800'
+                }`}
+              >
+                /{item.toUpperCase()}
+              </a>
+            ))}
           </div>
         )}
       </div>

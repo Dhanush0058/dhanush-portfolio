@@ -60,7 +60,8 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
     <section
       ref={containerRef}
       id="home"
-      className="relative pt-3 sm:pt-5 pb-12 px-4 sm:px-8 md:px-12 flex justify-center overflow-hidden w-full"
+      data-theme="light"
+      className="relative min-h-screen py-4 sm:py-6 px-4 sm:px-8 md:px-12 flex flex-col justify-center overflow-hidden w-full section-light snap-section z-10"
     >
       {/* Centered Framed Canvas Card (Balanced width with comfortable breathing room) */}
       <motion.div

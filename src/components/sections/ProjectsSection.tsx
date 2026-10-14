@@ -54,17 +54,27 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
   );
 
   return (
-    <section id="work" className="py-20 md:py-28 relative scroll-mt-20">
+    <section
+      id="work"
+      data-theme="dark"
+      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+    >
       <div className="section-container">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        {/* Section Header with Stagger */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+        >
           <div>
-            <div className="section-tag">
-              <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+            <div className="section-tag text-neutral-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
               01 // INDEXED WORKS
             </div>
-            <h2 className="section-title">FEATURED WORK</h2>
-            <p className="text-neutral-600 text-sm md:text-base font-normal max-w-xl">
+            <h2 className="section-title text-white">FEATURED WORK</h2>
+            <p className="text-neutral-400 text-sm md:text-base font-normal max-w-xl">
               Engineered with clean code, modern architectures, and rigorous problem-solving.
             </p>
           </div>
@@ -79,8 +89,8 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                   onClick={() => handleSelect(cat)}
                   className={`px-3.5 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${
                     active
-                      ? 'bg-neutral-950 text-white border-neutral-950 font-semibold shadow-sm'
-                      : 'bg-white hover:bg-neutral-100 text-neutral-700 border-neutral-200'
+                      ? 'bg-white text-black border-white font-semibold shadow-sm'
+                      : 'bg-[#161616] hover:bg-[#222222] text-neutral-400 hover:text-white border-neutral-800'
                   }`}
                 >
                   [ {cat} ]
@@ -88,9 +98,9 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Projects Grid with whileInView Stagger */}
+        {/* Projects Grid with whileInView Stagger (y: 40 -> 0, stagger: 0.12s) */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -100,39 +110,40 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.12,
+                delayChildren: 0.1,
               },
             },
           }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, idx) => {
+            {filteredProjects.map((project) => {
               const Icon = project.icon;
               return (
                 <motion.article
                   key={project.id}
                   layout
                   variants={{
-                    hidden: { opacity: 0, y: 25, filter: 'blur(4px)' },
+                    hidden: { opacity: 0, y: 40, filter: 'blur(4px)' },
                     visible: {
                       opacity: 1,
                       y: 0,
                       filter: 'blur(0px)',
-                      transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                      transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
                     },
                   }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="neo-card bg-white p-7 sm:p-9 flex flex-col justify-between group relative overflow-hidden"
+                  className="bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-7 sm:p-9 flex flex-col justify-between group relative overflow-hidden transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                 >
                   {/* Top Bar inside Card */}
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-6">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-900 group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300">
+                        <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
                           <Icon className="w-5 h-5" />
                         </div>
-                        <span className="font-mono text-xs font-semibold tracking-wider text-neutral-500 uppercase">
+                        <span className="font-mono text-xs font-semibold tracking-wider text-neutral-400 uppercase">
                           {project.type}
                         </span>
                       </div>
@@ -143,7 +154,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-full border border-neutral-200 hover:border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-700 transition-all duration-200"
+                            className="p-2 rounded-full border border-neutral-800 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
                             aria-label="View on GitHub"
                             title="GitHub Repository"
                           >
@@ -154,7 +165,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full border border-neutral-200 hover:border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-700 transition-all duration-200"
+                          className="p-2 rounded-full border border-neutral-800 hover:border-white bg-neutral-900 hover:bg-white text-neutral-300 hover:text-black transition-all duration-200"
                           aria-label="Open Project"
                           title="Open Project"
                         >
@@ -164,24 +175,24 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
                     </div>
 
                     {/* Title & Description */}
-                    <h3 className="font-display font-extrabold text-xl sm:text-2xl text-neutral-950 mb-3 group-hover:text-neutral-700 transition-colors">
+                    <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white mb-3 group-hover:text-neutral-300 transition-colors">
                       <a href={project.github} target="_blank" rel="noopener noreferrer">
                         {project.title}
                       </a>
                     </h3>
 
-                    <p className="text-neutral-600 text-sm leading-relaxed mb-6 font-normal">
+                    <p className="text-neutral-400 text-sm leading-relaxed mb-6 font-normal">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Bottom Tags */}
-                  <div className="pt-4 border-t border-neutral-100 mt-auto">
+                  <div className="pt-4 border-t border-neutral-800/80 mt-auto">
                     <ul className="flex flex-wrap gap-1.5">
                       {project.tags.map((tag) => (
                         <li
                           key={tag}
-                          className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-neutral-100 text-neutral-700 border border-neutral-200/60"
+                          className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-neutral-900 text-neutral-300 border border-neutral-800"
                         >
                           {tag}
                         </li>

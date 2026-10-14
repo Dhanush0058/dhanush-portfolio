@@ -98,13 +98,17 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 relative scroll-mt-20">
+    <section
+      id="contact"
+      data-theme="light"
+      className="relative min-h-screen py-20 md:py-28 section-light snap-section z-70 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center"
+    >
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
           <div className="section-tag">
             <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
@@ -117,7 +121,7 @@ const ContactSection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 25, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 40, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.55, ease: [0.25, 1, 0.5, 1] }}

@@ -60,20 +60,24 @@ const achievements: Achievement[] = [
 
 const AchievementsSection = () => {
   return (
-    <section id="achievements" className="py-20 md:py-28 relative scroll-mt-20">
+    <section
+      id="achievements"
+      data-theme="dark"
+      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-60 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+    >
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag">
-            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          <div className="section-tag text-neutral-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
             07 // ACCOLADES & HONORS
           </div>
-          <h2 className="section-title">HONORS & ACHIEVEMENTS</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-white">HONORS & ACHIEVEMENTS</h2>
+          <p className="section-subtitle text-neutral-400">
             Recognitions from competitive hackathons, national research conventions, and open-source initiatives.
           </p>
         </motion.div>
@@ -86,67 +90,66 @@ const AchievementsSection = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { staggerChildren: 0.1 },
+              transition: { staggerChildren: 0.12, delayChildren: 0.1 },
             },
           }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
         >
           {achievements.map((item, index) => {
             const Icon = item.icon;
-            // First item spans 2 columns on lg screens for visual hierarchy
             const isFeatured = index === 0;
 
             return (
               <motion.article
                 key={item.title}
                 variants={{
-                  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                  hidden: { opacity: 0, y: 40, filter: 'blur(4px)' },
                   visible: {
                     opacity: 1,
                     y: 0,
                     filter: 'blur(0px)',
-                    transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
+                    transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
                   },
                 }}
-                className={`neo-card bg-white p-7 sm:p-8 flex flex-col justify-between group hover:border-neutral-950 transition-all duration-300 ${
+                className={`bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-7 sm:p-8 flex flex-col justify-between group transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.4)] ${
                   isFeatured ? 'md:col-span-2 lg:col-span-2' : ''
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-950 group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors duration-300">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-neutral-100 text-neutral-900 border border-neutral-200">
+                    <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-neutral-900 text-neutral-300 border border-neutral-800">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-display font-extrabold text-xl sm:text-2xl text-neutral-950 mb-2 leading-tight">
+                  <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white mb-2 leading-tight">
                     {item.title}
                   </h3>
 
-                  <p className="font-mono text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">
+                  <p className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-4">
                     {item.event}
                   </p>
 
-                  <p className="text-neutral-600 text-sm leading-relaxed font-normal">
+                  <p className="text-neutral-400 text-sm leading-relaxed font-normal">
                     {item.description}
                   </p>
                 </div>
 
                 {item.link && (
-                  <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-neutral-800/80 flex items-center justify-between">
                     <a
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-900 hover:text-neutral-600 transition-colors group/link"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-neutral-300 transition-colors group/link"
                     >
                       <span>{item.linkText || 'View Details'}</span>
                       <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                     </a>
-                    <span className="font-mono text-[10px] text-neutral-400 uppercase">Verified</span>
+                    <span className="font-mono text-[10px] text-neutral-500 uppercase">Verified</span>
                   </div>
                 )}
               </motion.article>

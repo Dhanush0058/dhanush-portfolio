@@ -39,7 +39,7 @@ const Index = () => {
         e.preventDefault();
         const element = document.querySelector(href);
         if (element) {
-          lenis.scrollTo(element, { offset: -30, duration: 1.2 });
+          lenis.scrollTo(element, { offset: 0, duration: 1.2 });
         }
       }
     };
@@ -58,11 +58,11 @@ const Index = () => {
       {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
 
-      {/* Top Floating Navigation */}
+      {/* Top Floating Navigation with dynamic theme adaptation */}
       <Navigation />
 
-      {/* Main Content Sections */}
-      <main className="relative z-10">
+      {/* Main Full-Page Sections with Alternating Themes & Curtain Reveal */}
+      <main className="relative z-10 snap-page">
         <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         <AboutSection />

@@ -17,20 +17,24 @@ const tools = [
 
 const ToolsSection = () => {
   return (
-    <section id="tools" className="py-20 md:py-28 relative scroll-mt-20">
+    <section
+      id="tools"
+      data-theme="dark"
+      className="relative min-h-screen py-20 md:py-28 section-dark snap-section z-40 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center"
+    >
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-tag">
-            <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          <div className="section-tag text-neutral-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
             05 // TECH STACK & TOOLS
           </div>
-          <h2 className="section-title">DEVELOPMENT ARSENAL</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-white">DEVELOPMENT ARSENAL</h2>
+          <p className="section-subtitle text-neutral-400">
             Frameworks, libraries, compilers, and algorithmic platforms utilized daily.
           </p>
         </motion.div>
@@ -43,7 +47,7 @@ const ToolsSection = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { staggerChildren: 0.05 },
+              transition: { staggerChildren: 0.06, delayChildren: 0.1 },
             },
           }}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
@@ -52,17 +56,17 @@ const ToolsSection = () => {
             <motion.div
               key={tool.name}
               variants={{
-                hidden: { opacity: 0, y: 15, filter: 'blur(3px)' },
+                hidden: { opacity: 0, y: 40, filter: 'blur(3px)' },
                 visible: {
                   opacity: 1,
                   y: 0,
                   filter: 'blur(0px)',
-                  transition: { duration: 0.4, ease: [0.25, 1, 0.5, 1] },
+                  transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
                 },
               }}
-              className="neo-card bg-white p-5 flex flex-col items-center justify-center text-center group hover:border-neutral-950 transition-all duration-200"
+              className="bg-[#141414] border border-neutral-800 hover:border-neutral-700 rounded-2xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
             >
-              <div className="w-12 h-12 rounded-xl bg-neutral-50 border border-neutral-200/80 flex items-center justify-center p-2.5 mb-3 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center p-2.5 mb-3 group-hover:scale-110 transition-transform">
                 <img
                   src={tool.logo}
                   alt={tool.name}
@@ -70,10 +74,10 @@ const ToolsSection = () => {
                   loading="lazy"
                 />
               </div>
-              <span className="font-display font-bold text-sm text-neutral-950 mb-0.5">
+              <span className="font-display font-bold text-sm text-white mb-0.5">
                 {tool.name}
               </span>
-              <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-wider">
+              <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
                 {tool.category}
               </span>
             </motion.div>
