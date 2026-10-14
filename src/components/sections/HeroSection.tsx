@@ -50,14 +50,14 @@ const HeroSection = ({ activeFilter = 'All', onFilterChange }: HeroSectionProps)
     <section
       ref={containerRef}
       id="home"
-      className="relative min-h-screen pt-20 pb-12 sm:pt-24 sm:pb-16 px-3 sm:px-6 lg:px-8 flex items-center justify-center overflow-hidden"
+      className="relative pt-4 sm:pt-6 md:pt-8 pb-12 px-3 sm:px-6 lg:px-8 flex justify-center overflow-hidden"
     >
       {/* Centered Framed Canvas Card (matching the exact reference screenshot) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.97, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-6xl bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-10 md:p-12 lg:p-14 overflow-hidden flex flex-col justify-between min-h-[82vh]"
+        className="relative w-full max-w-6xl bg-white rounded-[2rem] sm:rounded-[2.5rem] border border-neutral-200/90 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.07),0_1px_4px_rgba(0,0,0,0.02)] p-6 sm:p-10 md:p-12 lg:p-14 overflow-hidden flex flex-col justify-between"
       >
         {/* Subtle inner ambient texture */}
         <div
