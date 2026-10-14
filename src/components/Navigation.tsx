@@ -84,13 +84,11 @@ const Navigation = ({
   }, []);
 
   const handleFollowToggle = () => {
-    setIsFollowing((prev) => {
-      const next = !prev;
-      toast({
-        title: next ? 'Following Dhanush Reddy' : 'Unfollowed',
-        description: next ? 'Thanks for following! Connected on GitHub @Dhanush0058' : 'You can follow anytime!',
-      });
-      return next;
+    setIsFollowing(true);
+    window.open('https://www.linkedin.com/in/dhanush-reddy-50551b309/', '_blank', 'noopener,noreferrer');
+    toast({
+      title: 'Connecting with Dhanush Reddy',
+      description: 'Opening LinkedIn profile in a new tab...',
     });
   };
 
@@ -100,26 +98,20 @@ const Navigation = ({
       const newCount = likeCount + 1;
       setLikeCount(newCount);
       localStorage.setItem('portfolio_likes', newCount.toString());
-      toast({
-        title: 'Thank you for the love! ❤️',
-        description: 'Glad you enjoy my portfolio design and work.',
-      });
-    } else {
-      setHasLiked(false);
-      const newCount = Math.max(0, likeCount - 1);
-      setLikeCount(newCount);
-      localStorage.setItem('portfolio_likes', newCount.toString());
     }
+    window.open('https://github.com/Dhanush0058/dhanush-portfolio', '_blank', 'noopener,noreferrer');
+    toast({
+      title: 'Thank you for the star & love! ❤️',
+      description: 'Opening GitHub project repository...',
+    });
   };
 
   const handleBookmark = () => {
-    setIsBookmarked((prev) => {
-      const next = !prev;
-      toast({
-        title: next ? 'Bookmarked Portfolio 🔖' : 'Bookmark removed',
-        description: next ? 'Saved to your favorites.' : '',
-      });
-      return next;
+    setIsBookmarked(true);
+    window.open('https://github.com/Dhanush0058/dhanush-portfolio', '_blank', 'noopener,noreferrer');
+    toast({
+      title: 'Star & Bookmark on GitHub 🔖',
+      description: 'Opening GitHub project repository...',
     });
   };
 

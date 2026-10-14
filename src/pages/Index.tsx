@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navigation from '@/components/Navigation';
 import PageTurner, { PageItem } from '@/components/PageTurner';
@@ -85,6 +85,25 @@ const Index = () => {
       ),
     },
   ];
+
+  // Global anchor click listener: Clicking any link like #contact turns directly to that page
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const id = href.slice(1);
+        const pageIndex = pages.findIndex((p) => p.id === id);
+        if (pageIndex !== -1) {
+          e.preventDefault();
+          setCurrentPage(pageIndex);
+        }
+      }
+    };
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
 
   const activeTheme = pages[currentPage]?.theme || 'light';
 
