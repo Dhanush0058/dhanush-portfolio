@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navigation from '@/components/Navigation';
+import StackedCard from '@/components/StackedCard';
 import HeroSection from '@/components/sections/HeroSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
@@ -55,42 +56,70 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background overflow-x-hidden selection:bg-neutral-900 selection:text-white">
+    <div className="relative min-h-screen bg-background overflow-x-clip selection:bg-neutral-900 selection:text-white">
       {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
 
       {/* Top Floating Navigation with dynamic theme adaptation */}
       <Navigation />
 
-      {/* Main Full-Page Sections with Strict Alternating Light/Dark Themes & Curtain Reveal */}
-      <main className="relative z-10 snap-page">
+      {/* Main Full-Page Sections with Sticky Card Stacking & 3D Scroll Physics */}
+      <main className="relative z-10">
         {/* Section 01: Hero [LIGHT THEME] */}
-        <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        <StackedCard id="home" theme="light" zIndex={10} isFirst={true}>
+          <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        </StackedCard>
 
         {/* Section 02: Featured Work [DARK THEME] */}
-        <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        <StackedCard id="work" theme="dark" zIndex={20}>
+          <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        </StackedCard>
 
-        {/* Section 03: About & Experience [LIGHT THEME] */}
-        <AboutSection />
-        <ExperienceSection />
+        {/* Section 03: Identity & Bio [LIGHT THEME] */}
+        <StackedCard id="about" theme="light" zIndex={30}>
+          <AboutSection />
+        </StackedCard>
 
-        {/* Section 04: Education [DARK THEME] */}
-        <EducationSection />
+        {/* Section 04: Professional Career [LIGHT THEME] */}
+        <StackedCard id="experience" theme="light" zIndex={35}>
+          <ExperienceSection />
+        </StackedCard>
 
-        {/* Section 05: Core Programming & Stack [LIGHT THEME] */}
-        <SkillsSection />
-        <ToolsSection />
+        {/* Section 05: Academic Record [DARK THEME] */}
+        <StackedCard id="education" theme="dark" zIndex={40}>
+          <EducationSection />
+        </StackedCard>
 
-        {/* Section 06: Certifications & Accolades [DARK THEME] */}
-        <CertificationsSection />
-        <AchievementsSection />
+        {/* Section 06: Core Programming [LIGHT THEME] */}
+        <StackedCard id="skills" theme="light" zIndex={50}>
+          <SkillsSection />
+        </StackedCard>
 
-        {/* Section 07: Contact / Get in Touch [LIGHT THEME] */}
-        <ContactSection />
+        {/* Section 07: Development Arsenal [LIGHT THEME] */}
+        <StackedCard id="tools" theme="light" zIndex={55}>
+          <ToolsSection />
+        </StackedCard>
+
+        {/* Section 08: Verified Credentials [DARK THEME] */}
+        <StackedCard id="certifications" theme="dark" zIndex={60}>
+          <CertificationsSection />
+        </StackedCard>
+
+        {/* Section 09: Accolades & Honors [DARK THEME] */}
+        <StackedCard id="achievements" theme="dark" zIndex={65}>
+          <AchievementsSection />
+        </StackedCard>
+
+        {/* Section 10: Dispatch & Transmission [LIGHT THEME] */}
+        <StackedCard id="contact" theme="light" zIndex={70} isLast={true}>
+          <ContactSection />
+        </StackedCard>
       </main>
 
       {/* Clean Minimalist Footer */}
-      <Footer />
+      <div className="relative z-[80]">
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -54,11 +54,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
   );
 
   return (
-    <section
-      id="work"
-      data-theme="dark"
-      className="relative min-h-screen py-6 md:py-10 section-dark snap-section z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] scroll-mt-0 flex flex-col justify-center bg-[#0B0B0B] text-[#F5F5F5]"
-    >
+    <div className="w-full py-6 md:py-10 flex flex-col justify-center">
       <div className="section-container">
         {/* Section Header with Stagger */}
         <motion.div
@@ -205,7 +201,7 @@ const ProjectsSection = ({ activeFilter = 'All', onFilterChange }: ProjectsSecti
           </AnimatePresence>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

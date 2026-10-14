@@ -41,7 +41,7 @@ const Navigation = () => {
       }
     );
 
-    const sections = document.querySelectorAll('section[data-theme]');
+    const sections = document.querySelectorAll('[data-theme]');
     sections.forEach((sec) => observer.observe(sec));
 
     return () => {

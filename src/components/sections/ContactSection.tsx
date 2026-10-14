@@ -98,11 +98,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section
-      id="contact"
-      data-theme="light"
-      className="relative min-h-screen py-6 md:py-10 section-light snap-section z-70 shadow-[0_-25px_60px_rgba(0,0,0,0.12)] scroll-mt-0 flex flex-col justify-center bg-[#F5F5F5] text-[#111111]"
-    >
+    <div className="w-full py-6 md:py-10 flex flex-col justify-center">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -274,7 +270,7 @@ const ContactSection = () => {
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
