@@ -75,10 +75,10 @@ const Index = () => {
     },
     {
       id: 'contact',
-      title: 'Transmission & Dispatch',
+      title: 'Get In Touch',
       theme: 'light',
       component: (
-        <div className="flex flex-col min-h-screen justify-between pt-2 sm:pt-4">
+        <div className="flex flex-col min-h-full justify-between pt-2 pb-6">
           <ContactSection />
           <Footer />
         </div>
@@ -93,14 +93,14 @@ const Index = () => {
       {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
 
-      {/* Top Floating Navigation synchronized with 3D Page Turn */}
+      {/* Top Floating Navigation synchronized with active page */}
       <Navigation
         currentPage={currentPage}
         onNavigatePage={setCurrentPage}
         activeTheme={activeTheme}
       />
 
-      {/* 3D Realistic Book Page Turn Experience */}
+      {/* 3D Vertical Page Turn Experience */}
       <main className="w-full h-full">
         <PageTurner
           pages={pages}

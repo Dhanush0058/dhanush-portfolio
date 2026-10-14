@@ -17,8 +17,8 @@ interface PageTurnerProps {
 export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps) => {
   const [direction, setDirection] = useState<1 | -1>(1);
   const isAnimatingRef = useRef(false);
+  const lastScrollTop = useRef(0);
   const touchStartY = useRef(0);
-  const touchStartX = useRef(0);
 
   const totalPages = pages.length;
 
@@ -28,13 +28,19 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
       if (targetPage < 0 || targetPage >= totalPages) return;
       if (targetPage === currentPage) return;
 
-      setDirection(targetPage > currentPage ? 1 : -1);
+      const isForward = targetPage > currentPage;
+      setDirection(isForward ? 1 : -1);
       isAnimatingRef.current = true;
       onPageChange(targetPage);
 
       setTimeout(() => {
         isAnimatingRef.current = false;
-      }, 850);
+        lastScrollTop.current = 0;
+        const container = document.getElementById(`page-scroll-${targetPage}`);
+        if (container) {
+          container.scrollTop = 0;
+        }
+      }, 780);
     },
     [currentPage, totalPages, onPageChange]
   );
@@ -47,30 +53,62 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
     goToPage(currentPage - 1);
   }, [goToPage, currentPage]);
 
-  // Wheel listener: Turn page on scroll
+  // Reset scroll position on page change
+  useEffect(() => {
+    const container = document.getElementById(`page-scroll-${currentPage}`);
+    if (container) {
+      container.scrollTop = 0;
+    }
+    lastScrollTop.current = 0;
+  }, [currentPage]);
+
+  // Robust Vertical Wheel Scroll:
+  // - Works across ALL pages (Hero, Work, About, Experience, Education, Skills, Tools, Certs, Achievements, Contact)
+  // - If content overflows, allows user to read to the bottom before turning
+  // - Dynamically queries the active page container by ID so refs never get detached/nulled on unmount
   useEffect(() => {
     let wheelTimeout: NodeJS.Timeout | null = null;
-    let accumulatedDelta = 0;
 
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
+      // Prevent multiple page turns during active animation
+      if (isAnimatingRef.current) {
+        e.preventDefault();
+        return;
+      }
 
-      if (isAnimatingRef.current) return;
+      const container = document.getElementById(`page-scroll-${currentPage}`);
+      if (!container) return;
 
-      accumulatedDelta += e.deltaY;
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const remainingScrollDown = scrollHeight - scrollTop - clientHeight;
+      const isNotScrollable = scrollHeight <= clientHeight + 15;
+      const isAtBottom =
+        remainingScrollDown <= 25 ||
+        (scrollTop > 0 && Math.abs(scrollTop - lastScrollTop.current) < 1);
+      const isAtTop = scrollTop <= 15;
 
-      if (wheelTimeout) clearTimeout(wheelTimeout);
-
-      wheelTimeout = setTimeout(() => {
-        if (Math.abs(accumulatedDelta) > 25) {
-          if (accumulatedDelta > 0) {
+      // Scrolling Down (Next Page)
+      if (e.deltaY > 0) {
+        if (isNotScrollable || isAtBottom) {
+          e.preventDefault();
+          if (wheelTimeout) clearTimeout(wheelTimeout);
+          wheelTimeout = setTimeout(() => {
             nextPage();
-          } else {
-            prevPage();
-          }
+          }, 20);
         }
-        accumulatedDelta = 0;
-      }, 50);
+      }
+      // Scrolling Up (Previous Page)
+      else if (e.deltaY < 0) {
+        if (isNotScrollable || isAtTop) {
+          e.preventDefault();
+          if (wheelTimeout) clearTimeout(wheelTimeout);
+          wheelTimeout = setTimeout(() => {
+            prevPage();
+          }, 20);
+        }
+      }
+
+      lastScrollTop.current = container.scrollTop;
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -78,86 +116,101 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
       window.removeEventListener('wheel', handleWheel);
       if (wheelTimeout) clearTimeout(wheelTimeout);
     };
-  }, [nextPage, prevPage]);
+  }, [nextPage, prevPage, currentPage]);
 
-  // Keyboard navigation (Arrow keys & Page up/down)
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        e.preventDefault();
-        nextPage();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        prevPage();
+      const container = document.getElementById(`page-scroll-${currentPage}`);
+      const remainingScrollDown = container
+        ? container.scrollHeight - container.scrollTop - container.clientHeight
+        : 0;
+      const isAtBottom =
+        !container || container.scrollHeight <= container.clientHeight + 15 || remainingScrollDown <= 25;
+      const isAtTop = !container || container.scrollTop <= 15;
+
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') {
+        if (isAtBottom) {
+          e.preventDefault();
+          nextPage();
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') {
+        if (isAtTop) {
+          e.preventDefault();
+          prevPage();
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextPage, prevPage]);
+  }, [nextPage, prevPage, currentPage]);
 
-  // Touch Swipe navigation for mobile & tablets
+  // Touch Swipe for mobile & tablets
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-    touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    const container = document.getElementById(`page-scroll-${currentPage}`);
     const diffY = touchStartY.current - e.changedTouches[0].clientY;
-    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const remainingScrollDown = container
+      ? container.scrollHeight - container.scrollTop - container.clientHeight
+      : 0;
+    const isAtBottom =
+      !container || container.scrollHeight <= container.clientHeight + 15 || remainingScrollDown <= 25;
+    const isAtTop = !container || container.scrollTop <= 15;
 
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-      // Horizontal swipe
-      if (diffX > 40) nextPage();
-      else if (diffX < -40) prevPage();
-    } else {
-      // Vertical swipe
-      if (diffY > 50) nextPage();
-      else if (diffY < -50) prevPage();
+    if (diffY > 40) {
+      if (isAtBottom) nextPage();
+    } else if (diffY < -40) {
+      if (isAtTop) prevPage();
     }
   };
 
   const activePage = pages[currentPage];
-  const isDark = activePage.theme === 'dark';
+  const isDark = activePage?.theme === 'dark';
 
-  // 3D Realistic Page Turn Variants
+  // 3D Vertical Page Turn Physics:
+  // Forward (dir > 0): active page flips UP into the sky, revealing the next page underneath
+  // Backward (dir < 0): previous page flips DOWN from the sky into place, covering the page underneath
   const pageVariants = {
     enter: (dir: number) => ({
-      rotateY: dir > 0 ? 0 : -100,
-      scale: dir > 0 ? 0.95 : 1,
-      x: dir > 0 ? 0 : -40,
+      rotateX: dir > 0 ? 0 : -85,
+      scale: dir > 0 ? 0.96 : 1,
+      y: dir > 0 ? 0 : -35,
       opacity: dir > 0 ? 0.8 : 0,
-      filter: dir > 0 ? 'brightness(0.7)' : 'brightness(1)',
+      filter: dir > 0 ? 'brightness(0.75)' : 'brightness(1)',
       zIndex: dir > 0 ? 10 : 30,
     }),
     center: {
-      rotateY: 0,
+      rotateX: 0,
       scale: 1,
-      x: 0,
+      y: 0,
       opacity: 1,
       filter: 'brightness(1)',
       zIndex: 20,
       transition: {
-        rotateY: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        scale: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        x: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        opacity: { duration: 0.4 },
-        filter: { duration: 0.6 },
+        rotateX: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        scale: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        y: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        opacity: { duration: 0.35 },
+        filter: { duration: 0.5 },
       },
     },
     exit: (dir: number) => ({
-      rotateY: dir > 0 ? -100 : 0,
-      scale: dir > 0 ? 1 : 0.95,
-      x: dir > 0 ? -40 : 0,
+      rotateX: dir > 0 ? -85 : 0,
+      scale: dir > 0 ? 1 : 0.96,
+      y: dir > 0 ? -35 : 0,
       opacity: dir > 0 ? 0 : 0.8,
-      filter: dir > 0 ? 'brightness(0.6)' : 'brightness(0.7)',
+      filter: dir > 0 ? 'brightness(0.65)' : 'brightness(0.75)',
       zIndex: dir > 0 ? 30 : 10,
       transition: {
-        rotateY: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        scale: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        x: { duration: 0.82, ease: [0.65, 0, 0.35, 1] },
-        opacity: { duration: 0.4, delay: 0.4 },
-        filter: { duration: 0.7 },
+        rotateX: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        scale: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        y: { duration: 0.75, ease: [0.65, 0, 0.35, 1] },
+        opacity: { duration: 0.35, delay: dir > 0 ? 0.35 : 0 },
+        filter: { duration: 0.6 },
       },
     }),
   };
@@ -167,7 +220,7 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className="relative w-full h-screen overflow-hidden select-none"
-      style={{ perspective: '2200px' }}
+      style={{ perspective: '2000px' }}
     >
       <AnimatePresence initial={false} custom={direction} mode="sync">
         <motion.div
@@ -178,35 +231,39 @@ export const PageTurner = ({ pages, currentPage, onPageChange }: PageTurnerProps
           animate="center"
           exit="exit"
           style={{
-            transformOrigin: 'left center',
+            transformOrigin: 'top center',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
           }}
-          className={`absolute inset-0 w-full h-full flex flex-col justify-center overflow-y-auto overflow-x-hidden ${
+          className={`absolute inset-0 w-full h-full ${
             isDark ? 'bg-[#0B0B0B] text-[#F5F5F5]' : 'bg-[#F5F5F5] text-[#111111]'
           }`}
         >
-          {/* Authentic Book Spine Shadow on Left Edge */}
+          {/* Top Page Spine / Binder Crease */}
           <div
-            className={`absolute left-0 top-0 bottom-0 w-8 pointer-events-none z-30 ${
+            className={`absolute top-0 left-0 right-0 h-4 pointer-events-none z-30 ${
               isDark
-                ? 'bg-gradient-to-r from-black/60 to-transparent border-l-4 border-white/10'
-                : 'bg-gradient-to-r from-black/15 to-transparent border-l-4 border-black/10'
+                ? 'bg-gradient-to-b from-black/80 to-transparent border-t-2 border-white/10'
+                : 'bg-gradient-to-b from-black/15 to-transparent border-t-2 border-black/10'
             }`}
           />
 
-          {/* Top-Right Book Folio Badge */}
-          <div className="absolute top-5 right-6 sm:right-10 z-30 pointer-events-none font-mono text-[11px] sm:text-xs tracking-widest uppercase opacity-40">
-            FOLIO {String(currentPage + 1).padStart(2, '0')} // {String(totalPages).padStart(2, '0')} • {activePage.title}
+          {/* Top-Right Folio Marker */}
+          <div className="absolute top-4 right-6 sm:right-10 z-30 pointer-events-none font-mono text-[11px] sm:text-xs tracking-widest uppercase opacity-40">
+            PAGE {String(currentPage + 1).padStart(2, '0')} // {String(totalPages).padStart(2, '0')} • {activePage?.title}
           </div>
 
-          {/* Page Content Container */}
-          <div className="w-full relative z-20">
-            {activePage.component}
+          {/* Dynamic Scrollable Page Canvas by ID */}
+          <div
+            id={`page-scroll-${currentPage}`}
+            className="w-full h-full overflow-y-auto overflow-x-hidden flex flex-col justify-start py-8 sm:py-12 overscroll-contain"
+          >
+            <div className="w-full relative z-20 my-auto">
+              {activePage?.component}
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>
-
     </div>
   );
 };
