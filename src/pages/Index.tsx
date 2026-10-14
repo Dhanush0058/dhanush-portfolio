@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import CustomCursor from '@/components/CustomCursor';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
@@ -17,9 +16,6 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden selection:bg-neutral-900 selection:text-white">
-      {/* Magnetic Circular Custom Cursor */}
-      <CustomCursor />
-
       {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
 
