@@ -148,7 +148,7 @@
 
   /* Section styling */
   .section-container {
-    @apply max-w-6xl mx-auto px-6 py-20 md:py-28;
+    @apply max-w-[96vw] xl:max-w-[1420px] 2xl:max-w-[1540px] mx-auto px-4 sm:px-8 py-20 md:py-28;
   }
 
   .section-tag {
