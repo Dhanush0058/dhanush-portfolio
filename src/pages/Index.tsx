@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import CustomCursor from '@/components/CustomCursor';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import Navigation from '@/components/Navigation';
@@ -12,30 +13,32 @@ import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
+  const [activeFilter, setActiveFilter] = useState('All');
+
   return (
-    <div className="relative min-h-screen bg-background overflow-x-hidden">
-      {/* Custom Cursor */}
+    <div className="relative min-h-screen bg-background overflow-x-hidden selection:bg-neutral-900 selection:text-white">
+      {/* Magnetic Circular Custom Cursor */}
       <CustomCursor />
-      
-      {/* Animated Background */}
+
+      {/* Subtle Ambient Background Texture */}
       <AnimatedBackground />
-      
-      {/* Navigation */}
+
+      {/* Top Floating Navigation */}
       <Navigation />
-      
-      {/* Main Content */}
+
+      {/* Main Content Sections */}
       <main className="relative z-10">
-        <HeroSection />
+        <HeroSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        <ProjectsSection activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         <AboutSection />
         <EducationSection />
         <SkillsSection />
-        <ProjectsSection />
-        <CertificationsSection />
         <ToolsSection />
+        <CertificationsSection />
         <ContactSection />
       </main>
-      
-      {/* Footer */}
+
+      {/* Clean Minimalist Footer */}
       <Footer />
     </div>
   );

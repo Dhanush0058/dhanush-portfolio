@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { Send, Mail, MapPin, Loader2, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Send, Mail, MapPin, Loader2, CheckCircle2, Github, Linkedin, ArrowUpRight } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 const ContactSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,24 +12,6 @@ const ContactSection = () => {
     email: '',
     message: '',
   });
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.fade-in-section');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -40,22 +21,20 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       toast({
-        title: 'Error',
-        description: 'Please fill in all fields',
+        title: 'Missing Details',
+        description: 'Please fill in all fields before sending.',
         variant: 'destructive',
       });
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast({
-        title: 'Error',
-        description: 'Please enter a valid email address',
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
         variant: 'destructive',
       });
       return;
@@ -63,28 +42,27 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
 
-    // Submit to Firebase
     try {
-      await addDoc(collection(db, "messages"), {
+      await addDoc(collection(db, 'messages'), {
         name: formData.name,
         email: formData.email,
         message: formData.message,
-        timestamp: serverTimestamp()
+        timestamp: serverTimestamp(),
       });
 
       setIsSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
 
       toast({
-        title: 'Message Sent! 🎉',
-        description: "Thank you for reaching out. I'll get back to you soon!",
+        title: 'Transmission Received! 🚀',
+        description: "Thank you for reaching out, Dhanush will respond shortly.",
       });
 
       setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error) {
+    } catch {
       toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        title: 'Transmission Failed',
+        description: 'Something went wrong. Please reach out via email or GitHub.',
         variant: 'destructive',
       });
     } finally {
@@ -93,130 +71,163 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" ref={sectionRef} className="py-20 md:py-32 relative">
+    <section id="contact" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="fade-in-section text-center mb-12">
-          <p className="text-primary font-mono text-sm mb-2">07. Contact</p>
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to reach out!
-          </p>
+        <div className="section-tag">
+          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          07 // TRANSMISSION
         </div>
+        <h2 className="section-title">GET IN TOUCH</h2>
+        <p className="section-subtitle">
+          Have an interesting project, question, or want to explore collaboration? Send a dispatch.
+        </p>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Contact Info */}
-          <div className="fade-in-section space-y-8">
-            <div className="card-glass p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-primary" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl items-start">
+          {/* Direct Info Card */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="neo-card bg-white p-7">
+              <h3 className="font-display font-bold text-lg text-neutral-950 mb-4">
+                DIRECT CHANNELS
+              </h3>
+
+              <div className="space-y-4">
+                <a
+                  href="mailto:dhanushreddy672@gmail.com"
+                  className="flex items-center gap-3.5 p-3 rounded-xl border border-neutral-200/80 hover:border-neutral-950 hover:bg-neutral-50 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-900 group-hover:bg-neutral-950 group-hover:text-white transition-colors">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-mono text-[10px] text-neutral-500 uppercase">Email</p>
+                    <p className="font-medium text-xs sm:text-sm text-neutral-900 truncate">
+                      dhanushreddy672@gmail.com
+                    </p>
+                  </div>
+                </a>
+
+                <div className="flex items-center gap-3.5 p-3 rounded-xl border border-neutral-200/80 bg-neutral-50/50">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-900">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] text-neutral-500 uppercase">Location</p>
+                    <p className="font-medium text-xs sm:text-sm text-neutral-900">
+                      Hyderabad, Telangana, India
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Email</p>
-                  <a
-                    href="mailto:dhanushr672@gmail.com"
-                    className="text-foreground hover:text-primary transition-colors font-medium"
-                  >
-                    dhanushr672@gmail.com
-                  </a>
-                </div>
+              </div>
+
+              {/* Social Channels */}
+              <div className="mt-6 pt-6 border-t border-neutral-100 flex gap-2">
+                <a
+                  href="https://github.com/Dhanush0058"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs font-semibold transition-all duration-200"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span>GitHub</span>
+                </a>
+                <a
+                  href="https://linkedin.com/in/dhanushreddy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-800 text-xs font-semibold transition-all duration-200"
+                >
+                  <Linkedin className="w-3.5 h-3.5" />
+                  <span>LinkedIn</span>
+                </a>
               </div>
             </div>
 
-            <div className="card-glass p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Location</p>
-                  <p className="text-foreground font-medium">India</p>
-                </div>
+            <div className="neo-card bg-neutral-950 text-white p-7">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="font-mono text-xs font-semibold tracking-wider text-neutral-300">
+                  STATUS: AVAILABLE
+                </span>
               </div>
-            </div>
-
-            <div className="p-6 rounded-xl bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10">
-              <p className="text-muted-foreground leading-relaxed">
-                I'm always open to discussing new opportunities,
-                interesting projects, or just having a chat about technology.
-                Don't hesitate to reach out!
+              <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                Currently open for software engineering internships, AI research projects, and collaborative initiatives.
               </p>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="fade-in-section card-glass p-6 md:p-8 space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                Your Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
-                disabled={isSubmitting}
-              />
-            </div>
+          {/* Form Card */}
+          <div className="lg:col-span-7 neo-card bg-white p-7 sm:p-9">
+            <h3 className="font-display font-bold text-xl text-neutral-950 mb-6">
+              SEND A MESSAGE
+            </h3>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                Your Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
-                className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
-                disabled={isSubmitting}
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                  Name / Organization
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name or Team"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 transition-colors"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell me about your project or just say hello..."
-                rows={5}
-                className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground resize-none"
-                disabled={isSubmitting}
-              />
-            </div>
+              <div>
+                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your.email@example.com"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 transition-colors"
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting || isSubmitted}
-              className="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Sending...
-                </>
-              ) : isSubmitted ? (
-                <>
-                  <CheckCircle className="w-5 h-5" />
-                  Message Sent!
-                </>
-              ) : (
-                <>
-                  <Send className="w-5 h-5" />
-                  Send Message
-                </>
-              )}
-            </button>
-          </form>
+              <div>
+                <label className="block font-mono text-xs font-semibold text-neutral-700 uppercase mb-2">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="What would you like to discuss or build?"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-neutral-950 focus:outline-none focus:ring-1 focus:ring-neutral-950 font-sans text-sm bg-neutral-50/50 resize-none transition-colors"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting || isSubmitted}
+                className="w-full neo-btn bg-neutral-950 hover:bg-neutral-800 disabled:bg-neutral-400 text-white font-semibold py-3.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Dispatching...</span>
+                  </>
+                ) : isSubmitted ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <span>Sent Successfully!</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>

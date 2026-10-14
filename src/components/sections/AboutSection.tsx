@@ -1,95 +1,109 @@
-import { useEffect, useRef } from 'react';
-import { Code2, Brain, Shield, Zap } from 'lucide-react';
+import { Code2, Brain, Shield, Zap, Sparkles } from 'lucide-react';
 
 const highlights = [
   {
     icon: Code2,
-    title: 'Passionate Coder',
-    description: 'Writing clean, efficient code in Python, Java, and C',
+    title: 'Clean Engineering',
+    description: 'Writing robust, maintainable code in Python, Java, and modern web architectures.',
   },
   {
     icon: Brain,
-    title: 'AI/ML Explorer',
-    description: 'Currently diving deep into artificial intelligence',
+    title: 'AI / ML Explorer',
+    description: 'Developing practical NLP and computer vision systems for real-world impact.',
   },
   {
     icon: Shield,
-    title: 'Cybersecurity',
-    description: 'Hands-on experience protecting digital assets',
+    title: 'Cybersecurity Intern',
+    description: 'Hands-on practical experience at Supraja Technologies securing digital endpoints.',
   },
   {
     icon: Zap,
-    title: 'Problem Solver',
-    description: 'Strong foundation in DSA using Java',
+    title: 'Algorithms & DSA',
+    description: 'Strong foundation in Data Structures and Algorithms with high analytical rigor.',
   },
 ];
 
 const AboutSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.fade-in-section');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="about" ref={sectionRef} className="py-20 md:py-32 relative">
+    <section id="about" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="fade-in-section">
-          <p className="text-primary font-mono text-sm mb-2">01. About Me</p>
-          <h2 className="section-title">Who I Am</h2>
+        <div className="section-tag">
+          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          02 // IDENTITY
         </div>
+        <h2 className="section-title">ABOUT ME</h2>
+        <p className="section-subtitle">
+          Building software driven by curiosity, analytical precision, and modern craftsmanship.
+        </p>
 
-        <div className="fade-in-section card-glass p-8 md:p-12 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none" />
-
-          <div className="relative z-10 space-y-8">
-            <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm a <span className="text-foreground font-medium">B.Tech Information Technology</span> student
-                at <span className="text-primary">Vidya Jyothi Institute of Technology</span>,
-                currently in my 2nd year. My journey in tech started with a curiosity about how
-                things work, which quickly evolved into a passion for building them.
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Bio Card */}
+          <div className="lg:col-span-7 neo-card bg-white p-8 sm:p-10">
+            <div className="space-y-6 text-neutral-700 text-base md:text-lg leading-relaxed">
+              <p>
+                I'm a <span className="font-semibold text-neutral-950">B.Tech Information Technology</span> student
+                at <span className="font-semibold text-neutral-950">Vidya Jyothi Institute of Technology</span> (VJIT, Hyderabad).
+                What started as a deep interest in how digital logic operates quickly evolved into an obsession
+                with architecting clean, purposeful applications.
               </p>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I specialize in <span className="text-foreground font-medium">Python, Java, and C</span>,
-                with a strong foundation in Data Structures and Algorithms.
-                I love tackling complex problems and turning ideas into reality through code.
+              <p>
+                My core competencies lie in <span className="font-semibold text-neutral-950">Python, Java, and C</span>,
+                reinforced by a dedicated problem-solving mindset in Data Structures and Algorithms. I enjoy taking
+                complex theoretical requirements and translating them into elegant, production-grade solutions.
               </p>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Currently, I'm expanding my horizons by learning{' '}
-                <span className="text-secondary">Artificial Intelligence and Machine Learning</span>,
-                while gaining practical experience as a{' '}
-                <span className="text-primary">Cybersecurity Intern at Supraja Technologies</span>.
-              </p>
-
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm always eager to learn, collaborate, and take on new challenges that push
-                my boundaries and help me grow as a developer.
+              <p>
+                Beyond standard software development, I actively delve into{' '}
+                <span className="font-semibold text-neutral-950">Artificial Intelligence & Machine Learning</span>,
+                supplemented by real-world defensive principles gained as a{' '}
+                <span className="font-semibold text-neutral-950">Cybersecurity Intern at Supraja Technologies</span>.
               </p>
             </div>
 
+            <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-wrap gap-4 font-mono text-xs text-neutral-600">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Hyderabad, India</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-neutral-400"></span>
+                <span>Batch of 2024–2028</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-neutral-400"></span>
+                <span>Open for Collaborations</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Highlights Grid */}
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            {highlights.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={index}
+                  className="neo-card bg-white p-5 sm:p-6 flex items-start gap-4 hover:border-neutral-900 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 text-neutral-900">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-base text-neutral-950 mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-
-    </section >
+    </section>
   );
 };
 

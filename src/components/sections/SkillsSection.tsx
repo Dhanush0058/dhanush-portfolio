@@ -1,91 +1,77 @@
-import { useEffect, useRef } from 'react';
-
-const skills = [
+const coreSkills = [
   {
     name: 'Python',
-    level: 90,
-    color: 'from-primary to-accent',
-    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'
+    role: 'Primary / AI & ML',
+    level: '90%',
+    desc: 'NumPy, OpenCV, Scikit-learn, Automation & Scripting',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
   },
   {
     name: 'Java',
-    level: 85,
-    color: 'from-secondary to-primary',
-    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
+    role: 'Core Systems & DSA',
+    level: '85%',
+    desc: 'Object-Oriented Programming, Collections Framework, Algorithms',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
   },
   {
     name: 'C',
-    level: 80,
-    color: 'from-primary to-secondary',
-    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg'
-  }
+    role: 'Low-Level & Memory',
+    level: '80%',
+    desc: 'Pointers, Memory Allocation, Computational Logic',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg',
+  },
 ];
 
 const SkillsSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.fade-in-section');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="skills" ref={sectionRef} className="py-20 md:py-32 relative">
+    <section id="skills" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="fade-in-section">
-          <p className="text-primary font-mono text-sm mb-2">03. Skills</p>
-          <h2 className="section-title">Technical Expertise</h2>
-          <p className="section-subtitle max-w-2xl">
-            Technologies and skills I've developed through learning and practice
-          </p>
+        <div className="section-tag">
+          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          04 // CAPABILITIES
         </div>
+        <h2 className="section-title">CORE PROGRAMMING</h2>
+        <p className="section-subtitle">
+          Primary languages utilized for software architecture, computational algorithms, and AI modeling.
+        </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {skills.map((skill, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {coreSkills.map((skill) => (
             <div
               key={skill.name}
-              className="fade-in-section card-glass p-6 flex flex-col items-center justify-center text-center hover:scale-105 transition-transform duration-300 group"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="neo-card bg-white p-7 sm:p-8 flex flex-col justify-between group hover:border-neutral-950 transition-all duration-300"
             >
-              <div className="w-16 h-16 mb-4 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                <img 
-                  src={skill.logo} 
-                  alt={skill.name}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <h3 className="text-foreground font-semibold text-lg">{skill.name}</h3>
-            </div>
-          ))}
-        </div>
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center justify-center p-3 group-hover:bg-neutral-100 transition-colors">
+                    <img src={skill.logo} alt={skill.name} className="w-full h-full object-contain" />
+                  </div>
+                  <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200">
+                    {skill.level}
+                  </span>
+                </div>
 
-        {/* Decorative Elements */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-section">
-          {[
-            { label: 'Languages', value: '3+' },
-            { label: 'Problems Solved', value: '100+' },
-            { label: 'Certifications', value: '2+' },
-            { label: 'Learning Streak', value: 'Daily' },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="card-glass p-6 text-center"
-            >
-              <p className="text-3xl font-bold gradient-text mb-2">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+                <h3 className="font-display font-extrabold text-2xl text-neutral-950 mb-1">
+                  {skill.name}
+                </h3>
+                <p className="font-mono text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-4">
+                  {skill.role}
+                </p>
+
+                <p className="text-neutral-600 text-sm leading-relaxed font-normal">
+                  {skill.desc}
+                </p>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="mt-6 pt-4 border-t border-neutral-100">
+                <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-neutral-950 rounded-full"
+                    style={{ width: skill.level }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>

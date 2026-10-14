@@ -1,114 +1,88 @@
-import { useEffect, useRef } from 'react';
 import { GraduationCap, Calendar, Award } from 'lucide-react';
 
 const education = [
   {
     institution: 'Vidya Jyothi Institute of Technology',
+    location: 'Hyderabad, India',
     degree: 'B.Tech Information Technology',
-    year: '2024 - 2028 (Current)',
+    year: '2024 – 2028 (In Progress)',
     grade: 'CGPA: 9.33',
-    status: 'current',
+    status: 'Current Program',
+    description: 'Focusing on core Computer Science & IT fundamentals, Data Structures, OOP, Database Systems, and Machine Learning.',
   },
   {
     institution: 'Sri Vaishnavi Junior College',
-    degree: 'Intermediate (MPC)',
-    year: '2022 - 2024',
-    grade: '96%',
-    status: 'completed',
+    location: 'Telangana, India',
+    degree: 'Intermediate (MPC — Maths, Physics, Chemistry)',
+    year: '2022 – 2024',
+    grade: 'Score: 96%',
+    status: 'Completed with Distinction',
+    description: 'Mastered higher secondary mathematics, analytical reasoning, and scientific principles.',
   },
   {
     institution: 'Sri Niketan High School',
-    degree: 'Secondary Education',
+    location: 'Telangana, India',
+    degree: 'Secondary School Certificate (SSC)',
     year: 'Batch of 2022',
-    grade: 'GPA: 9.3',
-    status: 'completed',
+    grade: 'GPA: 9.3 / 10',
+    status: 'Completed',
+    description: 'Built foundational academic excellence and first discovered passion for computing.',
   },
 ];
 
 const EducationSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.fade-in-section');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="education" ref={sectionRef} className="py-20 md:py-32 relative">
+    <section id="education" className="py-20 md:py-28 relative scroll-mt-20">
       <div className="section-container">
-        <div className="fade-in-section">
-          <p className="text-primary font-mono text-sm mb-2">02. Education</p>
-          <h2 className="section-title">Academic Journey</h2>
-          <p className="section-subtitle max-w-2xl">
-            My educational path that shaped me into who I am today
-          </p>
+        <div className="section-tag">
+          <span className="w-2 h-2 rounded-full bg-neutral-950 inline-block"></span>
+          03 // ACADEMIC RECORD
         </div>
+        <h2 className="section-title">EDUCATION</h2>
+        <p className="section-subtitle">
+          A trajectory of consistent academic distinction and deep foundational discipline.
+        </p>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-primary/20 hidden md:block" />
-
-          <div className="space-y-8">
-            {education.map((edu, index) => (
-              <div
-                key={edu.institution}
-                className="fade-in-section relative"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="md:ml-20 card-glass p-6 md:p-8">
-                  {/* Timeline dot */}
-                  <div className="absolute left-6 top-8 w-5 h-5 rounded-full bg-gradient-to-br from-primary to-secondary border-4 border-background hidden md:flex items-center justify-center">
-                    {edu.status === 'current' && (
-                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    )}
+        <div className="space-y-6 max-w-4xl">
+          {education.map((item, index) => (
+            <div
+              key={index}
+              className="neo-card bg-white p-6 sm:p-8 flex flex-col md:flex-row md:items-start justify-between gap-6 group hover:border-neutral-950 transition-colors"
+            >
+              <div className="flex items-start gap-4 flex-1">
+                <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 text-neutral-950 group-hover:bg-neutral-950 group-hover:text-white transition-colors duration-300">
+                  <GraduationCap className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="font-mono text-xs font-semibold px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
+                      {item.year}
+                    </span>
+                    <span className="font-mono text-xs text-neutral-500">
+                      {item.location}
+                    </span>
                   </div>
-
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <GraduationCap className="w-5 h-5 text-primary" />
-                        </div>
-                        {edu.status === 'current' && (
-                          <span className="px-3 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary">
-                            Current
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">
-                        {edu.institution}
-                      </h3>
-                      <p className="text-secondary font-medium mb-2">{edu.degree}</p>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar className="w-4 h-4" />
-                          {edu.year}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
-                      <Award className="w-4 h-4 text-primary" />
-                      <span className="text-foreground font-semibold">{edu.grade}</span>
-                    </div>
-                  </div>
+                  <h3 className="font-display font-bold text-lg sm:text-xl text-neutral-950">
+                    {item.institution}
+                  </h3>
+                  <p className="font-mono text-sm font-semibold text-neutral-800 mt-0.5">
+                    {item.degree}
+                  </p>
+                  <p className="text-neutral-600 text-sm mt-3 leading-relaxed font-normal">
+                    {item.description}
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
+
+              {/* Grade Badge */}
+              <div className="md:text-right flex-shrink-0 self-start md:self-center">
+                <div className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
+                  <Award className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>{item.grade}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

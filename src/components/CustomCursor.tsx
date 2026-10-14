@@ -1,86 +1,93 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [ringPosition, setRingPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const ringRef = useRef({ x: -100, y: -100 });
+  const mouseRef = useRef({ x: -100, y: -100 });
+  const ringElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updatePosition = (e: MouseEvent) => {
+    // Only enable on desktop with fine pointer
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) return;
+
+    document.body.classList.add('has-custom-cursor');
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
       setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+      if (!isVisible) setIsVisible(true);
     };
 
-    const updateRingPosition = () => {
-      setRingPosition(prev => ({
-        x: prev.x + (position.x - prev.x) * 0.15,
-        y: prev.y + (position.y - prev.y) * 0.15,
-      }));
-    };
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
 
-    const handleMouseEnter = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        target.getAttribute('role') === 'button'
-      ) {
+      const interactive = target.closest(
+        'a, button, input, textarea, select, [role="button"], .cursor-pointer, .interactive-card, .neo-card, .neo-btn'
+      );
+
+      if (interactive) {
         setIsHovering(true);
+      } else {
+        setIsHovering(false);
       }
     };
 
     const handleMouseLeave = () => {
-      setIsHovering(false);
-    };
-
-    const handleMouseOut = () => {
       setIsVisible(false);
     };
 
-    window.addEventListener('mousemove', updatePosition);
-    window.addEventListener('mouseout', handleMouseOut);
-    document.addEventListener('mouseover', handleMouseEnter);
-    document.addEventListener('mouseout', handleMouseLeave);
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseleave', handleMouseLeave);
 
-    const animationFrame = setInterval(updateRingPosition, 16);
+    let animationFrameId: number;
+
+    const render = () => {
+      // Lerp ring towards mouse position
+      const ease = 0.18;
+      ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * ease;
+      ringRef.current.y += (mouseRef.current.y - ringRef.current.y) * ease;
+
+      if (ringElementRef.current) {
+        ringElementRef.current.style.transform = `translate3d(${ringRef.current.x}px, ${ringRef.current.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener('mousemove', updatePosition);
-      window.removeEventListener('mouseout', handleMouseOut);
-      document.removeEventListener('mouseover', handleMouseEnter);
-      document.removeEventListener('mouseout', handleMouseLeave);
-      clearInterval(animationFrame);
+      document.body.classList.remove('has-custom-cursor');
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [position]);
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
   return (
     <>
-      {/* Center dot */}
+      {/* Inner Dot */}
       <div
-        className="custom-cursor"
+        className="custom-cursor-dot"
         style={{
-          left: position.x - 4,
-          top: position.y - 4,
+          transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
+          opacity: isHovering ? 0 : 1,
         }}
-      >
-        <div className="cursor-dot" />
-      </div>
-      
-      {/* Trailing ring */}
+      />
+
+      {/* Outer Magnetic Ring */}
       <div
-        className="custom-cursor"
-        style={{
-          left: ringPosition.x - 20,
-          top: ringPosition.y - 20,
-        }}
-      >
-        <div className={`cursor-ring ${isHovering ? 'hovering' : ''}`} />
-      </div>
+        ref={ringElementRef}
+        className={`custom-cursor-ring ${isHovering ? 'hovering' : ''}`}
+      />
     </>
   );
 };

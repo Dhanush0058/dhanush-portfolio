@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 
 const socialLinks = [
   {
@@ -21,36 +21,49 @@ const socialLinks = [
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="py-12 border-t border-border/50">
+    <footer className="py-12 border-t border-neutral-200/90 bg-white/70 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo & Copyright */}
           <div className="text-center md:text-left">
-            <p className="text-xl font-bold gradient-text mb-2">Dhanush Reddy</p>
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} All rights reserved.
+            <p className="font-display font-extrabold text-xl text-neutral-950 mb-1">
+              DHANUSH REDDY
+            </p>
+            <p className="font-mono text-xs text-neutral-500">
+              © {currentYear} • Handcrafted with high-contrast minimalism & modern systems.
             </p>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
+          {/* Social Links & Back to Top */}
+          <div className="flex items-center gap-3">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 target={link.name !== 'Email' ? '_blank' : undefined}
                 rel={link.name !== 'Email' ? 'noopener noreferrer' : undefined}
-                className="p-3 rounded-full bg-card/50 border border-border/50 hover:border-primary/50 hover:bg-card transition-all duration-300"
+                className="p-2.5 rounded-full border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-700 transition-all duration-200"
                 aria-label={link.name}
               >
-                <link.icon size={18} />
+                <link.icon className="w-4 h-4" />
               </a>
             ))}
+
+            <button
+              onClick={scrollToTop}
+              className="p-2.5 rounded-full border border-neutral-200 hover:border-neutral-950 hover:bg-neutral-950 hover:text-white text-neutral-700 transition-all duration-200 cursor-pointer ml-2"
+              title="Back to Top"
+              aria-label="Back to top"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
           </div>
         </div>
-
-
       </div>
     </footer>
   );
